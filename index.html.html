@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6B1E2C">
+<meta name="color-scheme" content="light">
+<title>A&amp;P Love Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light only;
+    --garnet:#6B1E2C;
+    --garnet-deep:#4A1420;
+    --garnet-bright:#8B2942;
+    --gold:#B08D57;
+    --gold-light:#D9BD8C;
+    --parchment:#F6EFE4;
+    --candlelight:#FFFBF3;
+    --ink:#2B1620;
+    --ink-soft:#8a7480;
+    --blush:#EFD3D6;
+    --shadow:rgba(74,20,32,0.16);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F6EFE4 !important;min-height:100%;}
+  html{color-scheme:light only;}
+  body{
+    background:#F6EFE4 !important;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    min-height:100dvh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button, input, textarea { font-family: inherit; }
+  button, .tab, #fab, .toggle-btn, .icon-btn, .choice-card {
+    -webkit-user-select:none; user-select:none; -webkit-touch-callout:none;
+  }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible{
+    outline:2px solid var(--gold); outline-offset:2px;
+  }
+
+  #app{max-width:480px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;position:relative;padding-bottom:110px;background:#F6EFE4 !important;}
+
+  header.site-header{text-align:center;padding:38px 20px 16px;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 100% at 50% -10%, rgba(232,196,201,0.55), rgba(232,196,201,0) 70%);}
+  .wordmark{font-family:'Parisienne',cursive;font-size:42px;margin:0;line-height:1;font-weight:400;position:relative;z-index:1;background:linear-gradient(105deg, var(--garnet) 25%, var(--gold) 42%, var(--garnet-bright) 50%, var(--garnet) 68%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:fadeUp .6s ease both, shimmerText 7s ease-in-out infinite;}
+  @keyframes shimmerText{0%{background-position:180% 0;}50%{background-position:0% 0;}100%{background-position:-180% 0;}}
+  .header-divider{width:64px;height:1px;background:var(--gold);margin:14px auto;position:relative;z-index:1;animation:fadeUp .6s ease .08s both;}
+  .header-divider::before{content:'\2665';position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--gold);background:var(--parchment);padding:0 8px;animation:pulse 2.6s ease-in-out infinite;}
+  .subtitle{font-family:'Inter';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-soft);margin:0;position:relative;z-index:1;animation:fadeUp .6s ease .14s both;}
+  .anniversary-pill{background:var(--candlelight);border:1px solid rgba(176,141,87,0.4);color:var(--garnet);font-family:'Cormorant Garamond',serif;font-size:13.5px;font-weight:600;padding:7px 18px;border-radius:20px;margin-top:12px;display:inline-flex;align-items:center;gap:7px;position:relative;z-index:1;animation:fadeUp .6s ease .2s both, glowPulse 3.6s ease-in-out infinite;box-shadow:0 2px 8px var(--shadow);}
+  @keyframes glowPulse{0%,100%{box-shadow:0 2px 8px var(--shadow);}50%{box-shadow:0 2px 16px rgba(176,141,87,0.55);}}
+  .anniversary-pill-special{background:linear-gradient(135deg, var(--gold-light), var(--gold));color:var(--garnet-deep);border-color:var(--gold);font-weight:700;animation:fadeUp .6s ease both, pulse 2.4s ease-in-out infinite;}
+  .floating-hearts{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+  .fh{position:absolute;bottom:-14px;color:var(--garnet);opacity:0;line-height:1;animation:floatUp 8s ease-in infinite;}
+  .fh1{left:12%;font-size:11px;animation-delay:.2s;}
+  .fh2{left:48%;font-size:15px;animation-delay:2.8s;}
+  .fh3{left:78%;font-size:9px;animation-delay:5.4s;}
+  .fh4{left:28%;font-size:8px;animation-delay:1.6s;color:var(--gold);}
+  .fh5{left:64%;font-size:12px;animation-delay:4.1s;color:var(--gold);}
+  @keyframes floatUp{
+    0%{transform:translateY(0) scale(.8);opacity:0;}
+    12%{opacity:.22;}
+    80%{opacity:.1;}
+    100%{transform:translateY(-120px) scale(1.1);opacity:0;}
+  }
+
+  /* ---- magic sparkle field (whole app) ---- */
+  .magic-sparkles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+  .sparkle{position:absolute;color:var(--gold);opacity:0;animation:twinkle ease-in-out infinite;}
+  @keyframes twinkle{
+    0%,100%{opacity:0;transform:scale(.4) rotate(0deg);}
+    50%{opacity:.6;transform:scale(1) rotate(25deg);}
+  }
+
+  nav.tabs{display:flex;justify-content:center;gap:16px;padding:4px 10px 0;border-bottom:1px solid rgba(107,30,44,0.12);overflow-x:auto;scrollbar-width:none;}
+  nav.tabs::-webkit-scrollbar{display:none;}
+  .tab-museum{color:var(--gold) !important;}
+  .tab{background:none;border:none;font-family:'Cormorant Garamond',serif;font-size:17.5px;font-weight:600;color:var(--ink-soft);padding:6px 1px 13px;cursor:pointer;position:relative;white-space:nowrap;transition:color .25s ease, transform .15s ease;}
+  .tab.active{color:var(--garnet);}
+  .tab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--gold);border-radius:2px;opacity:0;transform:scaleX(.5);transition:opacity .3s ease, transform .3s cubic-bezier(.3,.8,.4,1);}
+  .tab.active::after{opacity:1;transform:scaleX(1);}
+  .tab:active{transform:scale(.95);}
+
+  main#main-content{flex:1;padding:22px 18px 20px;background:#F6EFE4;}
+
+  /* ---- empty / loading states ---- */
+  .empty-state,.loading-state{text-align:center;padding:70px 30px;color:var(--ink-soft);}
+  .empty-state svg,.loading-state svg{color:var(--gold);}
+  .empty-state p,.loading-state p{font-family:'Lora',serif;font-size:14.5px;margin:14px 0 2px;}
+  .empty-sub{font-size:13px !important;opacity:0.8;}
+  .pulse-heart{display:inline-block;animation:pulse 1.1s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:0.65;}50%{transform:scale(1.15);opacity:1;}}
+
+  /* ---- memories: photo-stack cards ---- */
+  .group-list{display:flex;flex-direction:column;gap:28px;}
+  .group-card{position:relative;display:flex;gap:16px;align-items:center;padding:10px 6px;cursor:pointer;animation:fadeUp .4s ease both;}
+  .stack-behind{position:absolute;width:76px;height:76px;left:16px;top:10px;background:var(--candlelight);border:1px solid rgba(176,141,87,0.4);border-radius:10px;transform:rotate(var(--rot));box-shadow:0 3px 10px var(--shadow);z-index:0;}
+  .group-thumb{position:relative;z-index:1;width:76px;height:76px;border-radius:10px;background-color:var(--blush);background-size:cover;background-position:center;box-shadow:0 4px 14px var(--shadow);display:flex;align-items:center;justify-content:center;color:var(--garnet);flex-shrink:0;border:1px solid rgba(176,141,87,0.55);}
+  .media-badge{position:absolute;bottom:-6px;right:-6px;background:var(--garnet);color:var(--candlelight);font-size:11px;font-weight:600;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--parchment);}
+  .group-info{position:relative;z-index:1;flex:1;min-width:0;}
+  .group-date{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:17px;color:var(--ink);}
+  .group-memory{font-family:'Lora',serif;font-style:italic;font-size:13.5px;color:var(--ink-soft);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .fav-btn{position:relative;z-index:1;background:none;border:none;color:rgba(107,30,44,0.28);padding:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .fav-btn.is-fav{color:var(--garnet);}
+  .fav-btn:active{transform:scale(1.3);}
+  .on-this-day{background:linear-gradient(135deg, var(--blush), var(--candlelight));border:1px solid rgba(176,141,87,0.45);border-radius:16px;padding:16px 18px;margin-bottom:24px;cursor:pointer;animation:fadeUp .4s ease both;box-shadow:0 4px 14px var(--shadow);}
+  .otd-label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--garnet);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+  .otd-memory{font-family:'Lora',serif;font-style:italic;font-size:14px;color:var(--ink);line-height:1.5;}
+
+  /* ---- calendar ---- */
+  .section-heading{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--garnet);margin:26px 0 14px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .section-heading::before,.section-heading::after{content:'';width:26px;height:1px;background:linear-gradient(90deg, transparent, var(--gold));}
+  .section-heading::after{background:linear-gradient(90deg, var(--gold), transparent);}
+
+  /* ---- sort / filter controls ---- */
+  .list-controls{display:flex;gap:9px;margin-bottom:18px;animation:fadeUp .4s ease both;}
+  .list-controls button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;border-radius:12px;border:1.2px solid rgba(176,141,87,0.4);background:var(--candlelight);color:var(--garnet);font-size:12.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 2px 8px var(--shadow);}
+  .list-controls button svg{flex-shrink:0;}
+  .list-controls .filter-toggle.active{background:linear-gradient(135deg, var(--gold-light), var(--gold));color:var(--garnet-deep);border-color:var(--gold);}
+  .list-controls .filter-toggle.active svg{color:var(--garnet-deep);}
+  .list-controls button:active{transform:scale(.96);}
+  .cal-grid-wrap{background:var(--candlelight);border-radius:18px;padding:16px 14px 18px;box-shadow:0 3px 12px var(--shadow);animation:fadeUp .4s ease both;}
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .cal-nav-btn{width:32px;height:32px;border-radius:50%;border:none;background:var(--parchment);color:var(--garnet);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cal-nav-next svg{transform:scaleX(-1);}
+  .cal-month-label{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:16.5px;color:var(--ink);}
+  .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:2px;}
+  .cal-weekdays span{display:block;text-align:center;font-size:10px;font-weight:700;letter-spacing:.3px;color:var(--ink-soft);text-transform:uppercase;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;}
+  .cal-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:9px;cursor:pointer;position:relative;}
+  .cal-cell-empty{cursor:default;}
+  .cal-daynum{font-size:12.5px;color:var(--ink);}
+  .cal-cell-empty .cal-daynum{visibility:hidden;}
+  .cal-today{background:var(--blush);}
+  .cal-today .cal-daynum{font-weight:700;color:var(--garnet-deep);}
+  .cal-selected{outline:1.6px solid var(--gold);}
+  .cal-dot{width:4px;height:4px;border-radius:50%;background:var(--garnet);margin-top:2px;}
+  .cal-cell:active{background:var(--parchment);}
+  .day-detail{background:var(--candlelight);border-radius:14px;padding:6px 14px;margin:12px 0 6px;box-shadow:0 2px 8px var(--shadow);animation:fadeUp .3s ease both;}
+  .day-item{display:flex;align-items:center;gap:9px;padding:10px 2px;font-size:13.5px;color:var(--ink);cursor:pointer;border-bottom:1px solid rgba(176,141,87,0.15);}
+  .day-item:last-child{border-bottom:none;}
+  .day-item svg{color:var(--garnet);flex-shrink:0;}
+  .day-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .day-detail-empty{font-family:'Lora',serif;font-style:italic;font-size:13px;color:var(--ink-soft);text-align:center;margin:0;padding:12px 0;}
+  .special-dates-list{display:flex;flex-direction:column;gap:12px;}
+  .special-date-card{background:var(--candlelight);border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 3px 10px var(--shadow);animation:fadeUp .4s ease both;}
+  .special-date-card.is-today{background:linear-gradient(135deg, var(--gold-light), var(--blush));}
+  .sd-info{flex:1;min-width:0;}
+  .sd-label{font-weight:600;font-size:14.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sd-original{font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+  .sd-countdown{text-align:center;min-width:56px;flex-shrink:0;}
+  .sd-days{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--garnet);line-height:1;}
+  .sd-days-label{font-size:9.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.3px;}
+  .sd-today-badge{font-size:12px;font-weight:700;color:var(--garnet);display:flex;align-items:center;gap:4px;white-space:nowrap;}
+  .sd-delete{background:none;border:none;color:var(--ink-soft);opacity:.5;padding:6px;flex-shrink:0;}
+  .sd-delete:active{opacity:1;transform:scale(.9);}
+  .sd-edit{background:none;border:none;color:var(--ink-soft);opacity:.6;padding:6px;flex-shrink:0;}
+  .sd-edit:active{opacity:1;transform:scale(.9);}
+
+  /* ---- celebration ---- */
+  #celebration-overlay{position:fixed;inset:0;z-index:300;background:radial-gradient(ellipse 100% 80% at 50% 20%, rgba(232,196,201,0.75), var(--parchment) 70%);display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .4s ease;}
+  #celebration-overlay.show{opacity:1;pointer-events:auto;}
+  .confetti-field{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+  .confetti-piece{position:absolute;top:-24px;border-radius:2px;animation:confettiFall linear infinite;}
+  @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:0;}8%{opacity:1;}100%{transform:translateY(115vh) rotate(360deg);opacity:.85;}}
+  .celebration-card{position:relative;z-index:2;text-align:center;max-width:320px;animation:fadeUp .6s ease .1s both;}
+  .celebration-icon{color:var(--garnet);margin-bottom:8px;animation:pulse 1.6s ease-in-out infinite;}
+  .celebration-title{font-family:'Parisienne',cursive;font-size:40px;color:var(--garnet);margin:0 0 8px;font-weight:400;line-height:1.15;}
+  .celebration-sub{font-family:'Cormorant Garamond',serif;font-size:16.5px;color:var(--ink-soft);margin:0 0 28px;}
+
+  /* ---- songs: vinyl cards ---- */
+  .song-list{display:flex;flex-direction:column;gap:14px;}
+  .song-card{background:var(--candlelight);border-radius:var(--radius);box-shadow:0 3px 12px var(--shadow);overflow:hidden;animation:fadeUp .4s ease both;}
+  .song-row{display:flex;align-items:center;gap:14px;padding:12px 14px;cursor:pointer;}
+  .disc-wrap{width:54px;height:54px;flex-shrink:0;border-radius:50%;box-shadow:0 2px 8px var(--shadow);}
+  .disc{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at center,var(--gold-light) 0 8px,var(--garnet-deep) 9px 22px,var(--garnet) 23px 24px,var(--garnet-deep) 25px 100%);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:var(--gold-light);}
+  .disc-wrap.spin .disc{animation:spin 3.2s linear infinite;}
+  .song-info{flex:1;min-width:0;}
+  .song-title{font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .song-artist{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+  .toggle-btn{width:38px;height:38px;border-radius:50%;border:1px solid rgba(176,141,87,0.5);background:var(--parchment);color:var(--garnet);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .song-expanded{padding:2px 16px 18px;animation:fadeUp .3s ease both;}
+  .song-expanded.closing{animation:none;opacity:0;transform:translateY(-6px);transition:opacity .18s ease, transform .18s ease;}
+  .song-expanded iframe{border-radius:10px;display:block;border:none;}
+  .open-link-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--garnet);color:var(--candlelight);text-decoration:none;padding:13px;border-radius:10px;font-weight:600;font-size:14px;}
+  .song-date{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:15px;color:var(--garnet);margin-top:14px;}
+  .song-memory{font-family:'Lora',serif;font-style:italic;font-size:13.5px;color:var(--ink-soft);margin-top:4px;line-height:1.55;}
+  .song-actions{display:flex;gap:20px;margin-top:12px;}
+  .delete-link{background:none;border:none;color:var(--ink-soft);font-size:12px;display:flex;align-items:center;gap:5px;padding:4px 0;cursor:pointer;}
+
+  /* ---- tactile press feedback ---- */
+  .group-card,.song-row,.choice-card,.icon-btn,.toggle-btn,.btn-primary,.btn-secondary,.gate-submit,.remove-thumb,.add-more-thumb{transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;}
+  .group-card:active{transform:scale(.97);}
+  .song-row:active{transform:scale(.99);}
+  .song-card{transition:box-shadow .2s ease;}
+  .choice-card:active{transform:scale(.95);background:var(--blush);}
+  .icon-btn:active,.toggle-btn:active,.remove-thumb:active,.add-more-thumb:active{transform:scale(.9);}
+  .btn-primary:active,.btn-secondary:active,.gate-submit:active{transform:scale(.97);}
+
+  @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* ---- fab ---- */
+  #fab{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;background:linear-gradient(155deg,var(--garnet-bright),var(--garnet-deep));color:var(--candlelight);border:none;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 22px var(--shadow),0 0 0 5px rgba(255,251,243,0.9);cursor:pointer;z-index:40;transition:transform .15s ease;}
+  #fab:active{transform:translateX(-50%) scale(0.92);}
+
+  /* ---- bottom-sheet modal ---- */
+  #modal-root{position:fixed;inset:0;z-index:60;pointer-events:none;}
+  #modal-root.show{pointer-events:auto;}
+  #modal-root::before{content:'';position:absolute;inset:0;background:rgba(43,22,32,0.42);opacity:0;transition:opacity .25s ease;}
+  #modal-root.show::before{opacity:1;}
+  .sheet{position:absolute;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:var(--candlelight);border-radius:24px 24px 0 0;padding:10px 22px 30px;max-height:88vh;overflow-y:auto;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.8,.3,1);box-shadow:0 -10px 30px var(--shadow);}
+  #modal-root.show .sheet{transform:translateY(0);}
+  .sheet-handle{width:40px;height:4px;background:rgba(107,30,44,0.2);border-radius:3px;margin:8px auto 14px;}
+  .sheet-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;text-align:center;color:var(--garnet);margin:0 0 18px;}
+  .sheet-subtitle{font-family:'Lora',serif;font-style:italic;font-size:13px;color:var(--ink-soft);text-align:center;margin:-10px 0 20px;line-height:1.5;}
+  .choice-grid{display:flex;gap:9px;margin-bottom:14px;}
+  .choice-card{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 4px;border-radius:15px;border:1.4px solid rgba(176,141,87,0.4);background:var(--parchment);color:var(--garnet);font-weight:600;font-size:11.5px;cursor:pointer;text-align:center;line-height:1.3;}
+  .sheet-cancel{display:block;width:100%;text-align:center;background:none;border:none;color:var(--ink-soft);font-size:14px;padding:14px 0 4px;cursor:pointer;}
+
+  .field-label{display:block;font-size:12px;font-weight:600;letter-spacing:.4px;color:var(--ink-soft);margin:16px 0 6px;}
+  .field-input{width:100%;padding:12px 14px;border-radius:10px;border:1.4px solid rgba(107,30,44,0.18);background:var(--parchment);font-size:14.5px;color:var(--ink);}
+  .field-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,141,87,0.22);}
+  .field-textarea{min-height:84px;resize:vertical;font-family:'Lora',serif;font-style:italic;line-height:1.5;}
+  .sheet-actions{display:flex;gap:10px;margin-top:22px;}
+  .btn-primary,.btn-secondary{flex:1;padding:14px;border-radius:12px;font-weight:600;font-size:14.5px;border:none;cursor:pointer;}
+  .btn-primary{background:var(--garnet);color:var(--candlelight);}
+  .btn-primary:disabled{opacity:.6;}
+  .btn-secondary{background:transparent;color:var(--ink-soft);border:1.4px solid rgba(107,30,44,0.18);}
+
+  .preview-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .preview-thumb{position:relative;width:68px;height:68px;border-radius:10px;overflow:hidden;background:var(--blush);}
+  .preview-thumb img,.preview-thumb video{width:100%;height:100%;object-fit:cover;}
+  .preview-thumb.too-big{outline:2px solid #a83a3a;}
+  .too-big-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(168,58,58,0.88);color:#fff;font-size:8px;text-align:center;padding:1px 0;}
+  .remove-thumb{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(43,22,32,0.6);color:#fff;border:none;display:flex;align-items:center;justify-content:center;padding:0;}
+  .add-more-thumb{width:68px;height:68px;border-radius:10px;border:1.6px dashed rgba(176,141,87,0.55);background:none;color:var(--gold);display:flex;align-items:center;justify-content:center;}
+
+  /* ---- group detail overlay ---- */
+  #group-detail-overlay{position:fixed;inset:0;background:var(--parchment);z-index:50;transform:translateX(100%);transition:transform .32s cubic-bezier(.2,.8,.3,1);overflow-y:auto;}
+  #group-detail-overlay.show{transform:translateX(0);}
+  .detail-header{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 6px;position:sticky;top:0;background:var(--parchment);z-index:2;max-width:480px;margin:0 auto;}
+  .icon-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--candlelight);color:var(--garnet);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px var(--shadow);cursor:pointer;}
+  .detail-body{max-width:480px;margin:0 auto;padding:10px 22px 60px;}
+  .detail-date{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--garnet);text-align:center;margin:10px 0 14px;}
+  .detail-memory{font-family:'Lora',serif;font-style:italic;font-size:15.5px;line-height:1.7;color:var(--ink);text-align:center;padding:0 6px 26px;border-bottom:1px solid rgba(176,141,87,0.28);margin-bottom:24px;}
+  .detail-media{display:flex;flex-direction:column;gap:18px;}
+  .media-item{border-radius:16px;overflow:hidden;box-shadow:0 6px 20px var(--shadow);}
+  .media-item img,.media-item video{width:100%;display:block;}
+  .media-item.video-link{display:flex;align-items:center;gap:10px;justify-content:center;padding:20px;background:var(--candlelight);text-decoration:none;color:var(--garnet);font-weight:600;}
+  .fade-in{animation:fadeUp .45s ease both;}
+  .detail-loading{text-align:center;padding:60px 0;color:var(--gold);}
+
+  /* ---- toast ---- */
+  .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--candlelight);padding:11px 20px;border-radius:30px;font-size:13.5px;opacity:0;transition:all .3s ease;z-index:100;box-shadow:0 6px 20px rgba(0,0,0,0.25);max-width:82%;text-align:center;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast-error{background:#7a3535;}
+
+  /* ---- confirm dialog ---- */
+  #confirm-overlay{position:fixed;inset:0;background:rgba(43,22,32,0.45);z-index:80;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s ease;padding:20px;}
+  #confirm-overlay.show{opacity:1;pointer-events:auto;}
+  .confirm-box{background:var(--candlelight);border-radius:18px;padding:26px 22px;max-width:300px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+  .confirm-box p{font-family:'Lora',serif;font-size:15px;color:var(--ink);margin:0 0 20px;}
+  .confirm-actions{display:flex;gap:10px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
+    .floating-hearts{display:none;}
+    .magic-sparkles{display:none;}
+  }
+
+  /* ---- 3D museum mode ---- */
+  #museum-overlay{position:fixed;inset:0;z-index:120;background:#1a0d12;opacity:0;pointer-events:none;transition:opacity .45s ease;}
+  #museum-overlay.show{opacity:1;pointer-events:auto;}
+  #museum-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;}
+  #museum-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--gold-light);background:radial-gradient(ellipse at 50% 40%, #2a1119, #140a0d);z-index:5;}
+  #museum-loading .pulse-heart{color:var(--gold);}
+  #museum-loading p{font-family:'Cormorant Garamond',serif;font-size:16px;letter-spacing:.4px;}
+  #museum-topbar{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px 10px;display:flex;justify-content:space-between;align-items:flex-start;z-index:4;pointer-events:none;}
+  #museum-topbar .museum-title{font-family:'Parisienne',cursive;font-size:24px;color:var(--gold-light);text-shadow:0 2px 10px rgba(0,0,0,0.6);pointer-events:none;}
+  #museum-exit-btn{pointer-events:auto;width:42px;height:42px;border-radius:50%;border:1.4px solid rgba(217,189,140,0.55);background:rgba(26,13,18,0.65);backdrop-filter:blur(6px);color:var(--gold-light);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.4);}
+  #museum-exit-btn:active{transform:scale(.92);}
+  #museum-hint{position:absolute;top:calc(env(safe-area-inset-top,0px) + 62px);left:0;right:0;text-align:center;z-index:4;pointer-events:none;transition:opacity .5s ease;}
+  #museum-hint span{display:inline-block;background:rgba(26,13,18,0.6);backdrop-filter:blur(6px);color:var(--gold-light);font-size:12px;padding:7px 16px;border-radius:20px;border:1px solid rgba(217,189,140,0.35);font-family:'Inter',sans-serif;letter-spacing:.3px;}
+  #museum-crosshair{position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(246,239,228,0.55);z-index:4;pointer-events:none;box-shadow:0 0 6px rgba(246,239,228,0.4);}
+  #museum-prompt{position:absolute;left:50%;bottom:150px;transform:translateX(-50%) translateY(8px);z-index:6;opacity:0;pointer-events:none;transition:opacity .22s ease, transform .22s ease;}
+  #museum-prompt.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+  #museum-prompt button{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg, var(--gold-light), var(--gold));color:var(--garnet-deep);border:none;padding:13px 22px;border-radius:30px;font-weight:700;font-size:14px;font-family:'Cormorant Garamond',serif;box-shadow:0 6px 20px rgba(0,0,0,0.45);white-space:nowrap;max-width:78vw;overflow:hidden;text-overflow:ellipsis;}
+  #museum-prompt button:active{transform:scale(.96);}
+  #museum-joystick{position:absolute;left:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 26px);width:104px;height:104px;border-radius:50%;background:rgba(246,239,228,0.1);border:1.6px solid rgba(217,189,140,0.4);z-index:4;touch-action:none;}
+  #museum-joystick-knob{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(217,189,140,0.75);border:1.4px solid rgba(255,251,243,0.6);box-shadow:0 2px 10px rgba(0,0,0,0.35);}
+  #museum-look-zone{position:absolute;inset:0;z-index:3;touch-action:none;}
+  #museum-detail-panel{position:absolute;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:var(--candlelight);border-radius:24px 24px 0 0;padding:10px 22px calc(env(safe-area-inset-bottom,0px) + 26px);max-height:80vh;overflow-y:auto;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.8,.3,1);box-shadow:0 -10px 34px rgba(0,0,0,0.45);z-index:8;}
+  #museum-detail-panel.show{transform:translateY(0);}
+  #museum-detail-panel .md-media{border-radius:14px;overflow:hidden;box-shadow:0 4px 16px var(--shadow);margin-bottom:14px;}
+  #museum-detail-panel .md-media img,#museum-detail-panel .md-media video{width:100%;display:block;max-height:46vh;object-fit:cover;}
+  #museum-detail-panel .md-date{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--garnet);text-align:center;margin:8px 0 6px;}
+  #museum-detail-panel .md-text{font-family:'Lora',serif;font-style:italic;font-size:14.5px;line-height:1.65;color:var(--ink);text-align:center;padding:0 4px 4px;}
+  #museum-detail-panel .md-close{display:block;width:100%;text-align:center;background:none;border:none;color:var(--ink-soft);font-size:14px;padding:16px 0 2px;}
+  #museum-detail-panel iframe{border-radius:10px;display:block;border:none;margin-top:8px;}
+
+  /* ---- password gate ---- */
+  #gate-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background-color:var(--parchment);background-image:radial-gradient(ellipse 90% 60% at 50% 15%, rgba(232,196,201,0.75), rgba(232,196,201,0) 65%);transition:opacity .5s ease, transform .5s ease;}
+  #gate-overlay.unlocking{opacity:0;transform:scale(1.04);pointer-events:none;}
+  #gate-card{max-width:340px;width:100%;text-align:center;animation:fadeUp .55s ease both;}
+  #gate-card .wordmark{font-size:38px;}
+  .gate-lock{color:var(--gold);margin-bottom:6px;animation:fadeUp .5s ease both;}
+  .gate-sub{font-family:'Lora',serif;font-style:italic;font-size:14px;color:var(--ink-soft);margin:8px 0 28px;line-height:1.5;}
+  .gate-input-wrap{position:relative;}
+  .gate-input{width:100%;padding:14px 46px 14px 16px;border-radius:12px;border:1.4px solid rgba(107,30,44,0.22);background:var(--candlelight);font-size:15px;color:var(--ink);text-align:center;letter-spacing:.3px;}
+  .gate-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(176,141,87,0.22);}
+  .gate-toggle-visibility{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:none;background:none;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;}
+  .gate-error{min-height:16px;color:#a83a3a;font-size:12.5px;margin:10px 0 0;}
+  .gate-submit{width:100%;margin-top:12px;padding:14px;border-radius:12px;border:none;background:var(--garnet);color:var(--candlelight);font-weight:600;font-size:15px;cursor:pointer;}
+  @keyframes shake{10%,90%{transform:translateX(-2px);}20%,80%{transform:translateX(4px);}30%,50%,70%{transform:translateX(-8px);}40%,60%{transform:translateX(8px);}}
+  #gate-card.shake{animation:shake .5s ease;}
+</style>
+</head>
+<body>
+
+<div class="magic-sparkles" aria-hidden="true">
+  <span class="sparkle" style="top:6%;left:10%;font-size:13px;animation-duration:4.2s;animation-delay:.2s;">&#10022;</span>
+  <span class="sparkle" style="top:14%;left:82%;font-size:10px;animation-duration:5.1s;animation-delay:1.6s;">&#10022;</span>
+  <span class="sparkle" style="top:28%;left:92%;font-size:8px;animation-duration:3.8s;animation-delay:.9s;">&#10022;</span>
+  <span class="sparkle" style="top:40%;left:6%;font-size:11px;animation-duration:4.6s;animation-delay:2.4s;">&#10022;</span>
+  <span class="sparkle" style="top:58%;left:88%;font-size:9px;animation-duration:5.4s;animation-delay:1.1s;">&#10022;</span>
+  <span class="sparkle" style="top:70%;left:14%;font-size:12px;animation-duration:4.9s;animation-delay:3.1s;">&#10022;</span>
+  <span class="sparkle" style="top:82%;left:76%;font-size:10px;animation-duration:4.1s;animation-delay:.5s;">&#10022;</span>
+  <span class="sparkle" style="top:92%;left:35%;font-size:9px;animation-duration:5.6s;animation-delay:2.9s;">&#10022;</span>
+</div>
+
+<div id="gate-overlay">
+  <div id="gate-card">
+    <div class="gate-lock">
+      <svg viewBox="0 0 24 24" width="30" height="30"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="12" cy="15.2" r="1.3" fill="currentColor"/></svg>
+    </div>
+    <h1 class="wordmark">A&amp;P Love Story</h1>
+    <p class="gate-sub">A private space, just for us.</p>
+    <div class="gate-input-wrap">
+      <input type="password" id="gate-password-input" class="gate-input" placeholder="Enter the password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+      <button type="button" class="gate-toggle-visibility" id="gate-toggle-btn" onclick="toggleGatePasswordVisibility()" aria-label="Show password">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      </button>
+    </div>
+    <p class="gate-error" id="gate-error"></p>
+    <button class="gate-submit" onclick="checkPassword()">Enter</button>
+  </div>
+</div>
+
+<div id="celebration-overlay"></div>
+
+<div id="app">
+  <header class="site-header">
+    <div class="floating-hearts" aria-hidden="true">
+      <span class="fh fh1">&#9829;</span>
+      <span class="fh fh2">&#9829;</span>
+      <span class="fh fh3">&#9829;</span>
+      <span class="fh fh4">&#10022;</span>
+      <span class="fh fh5">&#10022;</span>
+    </div>
+    <h1 class="wordmark">A&amp;P Love Story</h1>
+    <div class="header-divider"></div>
+    <p class="subtitle">Andrew &amp; Parthenia</p>
+    <div id="anniversary-display"></div>
+  </header>
+  <nav class="tabs">
+    <button class="tab active" id="tab-memories" onclick="switchTab('memories')">Memories</button>
+    <button class="tab" id="tab-songs" onclick="switchTab('songs')">Songs</button>
+    <button class="tab" id="tab-calendar" onclick="switchTab('calendar')">Calendar</button>
+    <button class="tab tab-museum" id="tab-museum" onclick="enterMuseum()">&#127963;&#65039; Museum</button>
+  </nav>
+  <main id="main-content"></main>
+  <button id="fab" onclick="openAddModal()" aria-label="Add a memory">
+    <svg viewBox="0 0 24 24" width="26" height="26"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<div id="group-detail-overlay"></div>
+<div id="modal-root"></div>
+
+<div id="confirm-overlay">
+  <div class="confirm-box">
+    <p id="confirm-message"></p>
+    <div class="confirm-actions">
+      <button class="btn-secondary" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-primary" onclick="confirmYes()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="museum-overlay">
+  <canvas id="museum-canvas"></canvas>
+  <div id="museum-look-zone"></div>
+  <div id="museum-crosshair"></div>
+  <div id="museum-topbar">
+    <span class="museum-title">A&amp;P Gallery</span>
+    <button id="museum-exit-btn" onclick="exitMuseum()" aria-label="Exit museum">
+      <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div id="museum-hint"><span>Drag to look &middot; use the stick to walk &middot; WASD + mouse on desktop</span></div>
+  <div id="museum-joystick">
+    <div id="museum-joystick-knob"></div>
+  </div>
+  <div id="museum-prompt"><button id="museum-prompt-btn" onclick="viewFocusedExhibit()"></button></div>
+  <div id="museum-detail-panel"></div>
+  <div id="museum-loading">
+    <div class="pulse-heart"><svg viewBox="0 0 24 24" width="30" height="30"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.2.2.3.5.5.9.5s.7-.2.9-.5C12 5.6 13.4 4.5 15.4 4.5c3.4 0 4.9 3.4 3.4 6.2C16.5 16.4 12 21 12 21z" fill="currentColor"/></svg></div>
+    <p>Lighting the gallery&hellip;</p>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept="image/*,video/*" multiple style="display:none">
+
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
+<script>
+/* ===================================================================
+   FIREBASE SETUP — used for the data (memories, songs, dates).
+   Paste your own project's config below.
+=================================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyCwjjOzoGZgPV1_paanJQ8rAtEFfUvFT5k",
+  authDomain: "ap-love-story.firebaseapp.com",
+  projectId: "ap-love-story",
+  storageBucket: "ap-love-story.firebasestorage.app",
+  messagingSenderId: "1005353530245",
+  appId: "1:1005353530245:web:60f479a25159fcfb464aec"
+};
+
+const FIREBASE_CONFIGURED = !!(
+  firebaseConfig.apiKey && firebaseConfig.apiKey !== 'YOUR_API_KEY' &&
+  firebaseConfig.projectId && firebaseConfig.projectId !== 'YOUR_PROJECT_ID'
+);
+let fbAuth = null, db = null;
+if (FIREBASE_CONFIGURED) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    fbAuth = firebase.auth();
+    db = firebase.firestore();
+  } catch (e) {
+    console.error('Firebase initialization failed', e);
+  }
+}
+
+/* ===================================================================
+   CLOUDINARY SETUP — used for the actual photo/video files.
+   Free forever, no credit card. Paste your cloud name and unsigned
+   upload preset name below (see setup guide).
+=================================================================== */
+const CLOUDINARY_CLOUD_NAME = "nyiog49q";
+const CLOUDINARY_UPLOAD_PRESET = "ap-love-story";
+const CLOUDINARY_CONFIGURED = !!(
+  CLOUDINARY_CLOUD_NAME && CLOUDINARY_CLOUD_NAME !== 'YOUR_CLOUD_NAME' &&
+  CLOUDINARY_UPLOAD_PRESET && CLOUDINARY_UPLOAD_PRESET !== 'YOUR_UPLOAD_PRESET'
+);
+
+/* ===================== STATE & CONSTANTS ===================== */
+const TOGETHER_SINCE = '2025-10-24'; // the day it all began — fixed, not editable
+
+let state = {
+  view: 'memories',
+  groups: [],
+  songs: [],
+  specialDates: [],
+  calendarMonth: new Date().getMonth(),
+  calendarYear: new Date().getFullYear(),
+  openDayDetail: null,
+  openGroupId: null,
+  openGroupMedia: null,
+  addStep: null,
+  pendingFiles: [],
+  playingSongId: null,
+  memSort: 'newest',
+  memFavOnly: false,
+  songSort: 'newest',
+  songFavOnly: false,
+  sdSort: 'newest',
+  sdFavOnly: false,
+  editingId: null,
+  editingMedia: null,
+};
+let confirmCallback = null;
+
+const FULL_IMG_MAX_DIM = 1600;
+const FULL_IMG_QUALITY = 0.78;
+const THUMB_MAX_DIM = 140;
+const THUMB_QUALITY = 0.5;
+const VIDEO_MAX_BYTES = 100 * 1024 * 1024;
+const VIDEO_MAX_MB = Math.round(VIDEO_MAX_BYTES / (1024 * 1024));
+const VALID_PASSWORDS = ['b7bk ya dody', 'b7bk ya barbora'];
+function normalizeSecret(s) { return (s || '').toLowerCase().trim().replace(/\s+/g, ' '); }
+const VALID_PASSWORDS_NORM = VALID_PASSWORDS.map(normalizeSecret);
+
+/* ===================== ICONS (inline SVG, currentColor) ===================== */
+const ICONS = {
+  plus: (s) => `<svg viewBox="0 0 24 24" width="${s||26}" height="${s||26}"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+  back: (s) => `<svg viewBox="0 0 24 24" width="${s||22}" height="${s||22}"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  trash: (s) => `<svg viewBox="0 0 24 24" width="${s||19}" height="${s||19}"><path d="M4 7h16M9 7V4.8c0-.44.36-.8.8-.8h4.4c.44 0 .8.36.8.8V7m-9 0 .8 12.2c.03.5.44.8.94.8h6.52c.5 0 .91-.3.94-.8L18 7" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  play: (s) => `<svg viewBox="0 0 24 24" width="${s||16}" height="${s||16}"><path d="M6 4l14 8-14 8V4z" fill="currentColor"/></svg>`,
+  chevronUp: (s) => `<svg viewBox="0 0 24 24" width="${s||16}" height="${s||16}"><path d="M5 15l7-7 7 7" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  close: (s) => `<svg viewBox="0 0 24 24" width="${s||14}" height="${s||14}"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+  note: (s) => `<svg viewBox="0 0 24 24" width="${s||20}" height="${s||20}"><path d="M9 18V5l11-2v13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18.5" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16.5" r="2.5" fill="currentColor"/></svg>`,
+  image: (s) => `<svg viewBox="0 0 24 24" width="${s||22}" height="${s||22}"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="8.5" cy="10" r="1.5" fill="currentColor"/><path d="M21 16l-5.5-5.5L7 19" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  external: (s) => `<svg viewBox="0 0 24 24" width="${s||15}" height="${s||15}"><path d="M14 5h5v5M19 5l-9 9M8 5H6a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  heart: (s) => `<svg viewBox="0 0 24 24" width="${s||13}" height="${s||13}"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.4 2 5 5.4 5c2 0 3.4 1.1 4.1 2.2.2.3.5.5.9.5s.7-.2.9-.5C12 5.6 13.4 4.5 15.4 4.5c3.4 0 4.9 3.4 3.4 6.2C16.5 16.4 12 21 12 21z" fill="currentColor"/></svg>`,
+  vinyl: (s) => `<svg viewBox="0 0 24 24" width="${s||34}" height="${s||34}"><circle cx="12" cy="12" r="10.5" fill="#2B1620"/><circle cx="12" cy="12" r="8" fill="none" stroke="#4A1420" stroke-width="0.6"/><circle cx="12" cy="12" r="6" fill="none" stroke="#4A1420" stroke-width="0.6"/><circle cx="12" cy="12" r="3.2" fill="#B08D57"/><circle cx="12" cy="12" r="0.9" fill="#2B1620"/></svg>`,
+  photos: (s) => { const w = s||34, h = Math.round(w*24/28); return `<svg viewBox="0 0 28 24" width="${w}" height="${h}"><rect x="1" y="1" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.3" fill="none"/><rect x="8" y="8" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.3" fill="#FFFBF3"/><circle cx="13" cy="13" r="1.2" fill="currentColor"/><path d="M9 19l3.2-3.6 2.3 2.2 2.7-3 3.8 4.4" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`; },
+  eye: (s) => `<svg viewBox="0 0 24 24" width="${s||18}" height="${s||18}"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>`,
+  eyeOff: (s) => `<svg viewBox="0 0 24 24" width="${s||18}" height="${s||18}"><path d="M3 3l18 18M10.6 10.6a3 3 0 004.2 4.2M9.3 5.3A10.6 10.6 0 0112 5c6.5 0 10 7 10 7a17.9 17.9 0 01-3.1 4.1M6.5 6.7C4 8.3 2 12 2 12s1.6 3.1 4.6 5.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  backup: (s) => `<svg viewBox="0 0 24 24" width="${s||16}" height="${s||16}"><path d="M12 3v12m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17v2a2 2 0 002 2h10a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  sortDesc: (s) => `<svg viewBox="0 0 24 24" width="${s||14}" height="${s||14}"><path d="M6 4v13m0 0l-3.5-3.5M6 17l3.5-3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 6h6M14 11h4.5M14 16h3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+  sortAsc: (s) => `<svg viewBox="0 0 24 24" width="${s||14}" height="${s||14}"><path d="M6 20V7m0 0l-3.5 3.5M6 7l3.5 3.5" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 18h6M14 13h4.5M14 8h3" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+  sparkle: (s) => `<svg viewBox="0 0 24 24" width="${s||14}" height="${s||14}"><path d="M12 2l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" fill="currentColor"/></svg>`,
+  edit: (s) => `<svg viewBox="0 0 24 24" width="${s||18}" height="${s||18}"><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  museum: (s) => `<svg viewBox="0 0 24 24" width="${s||18}" height="${s||18}"><path d="M3 10l9-6 9 6" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10v9M8 10v9M12 10v9M16 10v9M20 10v9M2.5 20h19" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>`
+};
+
+/* ===================== GENERAL HELPERS ===================== */
+function esc(str) {
+  if (str === null || str === undefined) return '';
+  const div = document.createElement('div');
+  div.textContent = String(str);
+  return div.innerHTML;
+}
+function truncate(str, n) {
+  if (!str) return '';
+  return str.length > n ? str.slice(0, n).trim() + '\u2026' : str;
+}
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-').map(Number);
+  if (parts.length < 3 || parts.some(isNaN)) return dateStr;
+  const dd = String(parts[2]).padStart(2, '0');
+  const mm = String(parts[1]).padStart(2, '0');
+  const yy = String(parts[0] % 100).padStart(2, '0');
+  return `${dd}/${mm}/${yy}`;
+}
+function parseDateStr(dateStr) {
+  if (!dateStr) return null;
+  const parts = dateStr.split('-').map(Number);
+  if (parts.length < 3 || parts.some(isNaN)) return null;
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+function formatDuration(fromDateStr) {
+  const from = parseDateStr(fromDateStr);
+  if (!from) return null;
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  if (from > now) return null;
+  let years = now.getFullYear() - from.getFullYear();
+  let months = now.getMonth() - from.getMonth();
+  let days = now.getDate() - from.getDate();
+  if (days < 0) {
+    months--;
+    days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+  }
+  if (months < 0) { years--; months += 12; }
+  const bits = [];
+  if (years > 0) bits.push(`${years} year${years !== 1 ? 's' : ''}`);
+  if (months > 0) bits.push(`${months} month${months !== 1 ? 's' : ''}`);
+  if (days > 0 || bits.length === 0) bits.push(`${days} day${days !== 1 ? 's' : ''}`);
+  return bits.join(', ');
+}
+function ordinalSuffix(n) {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+function isAnniversaryToday() {
+  const start = parseDateStr(TOGETHER_SINCE);
+  if (!start) return null;
+  const today = new Date();
+  if (start.getMonth() === today.getMonth() && start.getDate() === today.getDate()) {
+    const years = today.getFullYear() - start.getFullYear();
+    if (years > 0) return years;
+  }
+  return null;
+}
+function findOnThisDay() {
+  const today = new Date();
+  const matches = [];
+  for (const g of state.groups) {
+    const d = parseDateStr(g.date);
+    if (!d) continue;
+    if (d.getMonth() === today.getMonth() && d.getDate() === today.getDate() && d.getFullYear() < today.getFullYear()) {
+      matches.push({ group: g, yearsAgo: today.getFullYear() - d.getFullYear() });
+    }
+  }
+  return matches;
+}
+function toast(msg, isError) {
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' toast-error' : '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 2800);
+}
+function withTimeout(promise, ms) {
+  return Promise.race([promise, new Promise((resolve) => setTimeout(() => resolve(null), ms))]);
+}
+function sortByDate(arr, dir) {
+  return arr.slice().sort((a, b) => {
+    const da = parseDateStr(a.date), db = parseDateStr(b.date);
+    if (!da && !db) return 0;
+    if (!da) return 1;
+    if (!db) return -1;
+    return dir === 'newest' ? db - da : da - db;
+  });
+}
+function listControlsHtml(sortDir, favOnly, sortFn, favFn) {
+  return `
+    <div class="list-controls">
+      <button class="sort-toggle" onclick="${sortFn}()">
+        ${sortDir === 'newest' ? ICONS.sortDesc(14) : ICONS.sortAsc(14)}
+        ${sortDir === 'newest' ? 'Newest first' : 'Oldest first'}
+      </button>
+      <button class="filter-toggle ${favOnly ? 'active' : ''}" onclick="${favFn}()">
+        ${ICONS.heart(13)} ${favOnly ? 'Favorites only' : 'All'}
+      </button>
+    </div>`;
+}
+
+/* ===================== STORAGE (Firestore-backed) ===================== */
+async function storageGet(key) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const doc = await db.collection('data').doc(key).get();
+      return doc.exists ? (doc.data().value ?? null) : null;
+    } catch (e) {
+      console.error('storage get failed', key, e);
+      if (attempt === 0) { await new Promise((r) => setTimeout(r, 500)); continue; }
+      return null;
+    }
+  }
+}
+async function storageSet(key, value) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      await db.collection('data').doc(key).set({ value });
+      return true;
+    } catch (e) {
+      console.error('storage set failed', key, e);
+      if (attempt === 0) { await new Promise((r) => setTimeout(r, 500)); continue; }
+      return false;
+    }
+  }
+}
+async function storageDelete(key) {
+  try { await db.collection('data').doc(key).delete(); } catch (e) { console.error('storage delete failed', key, e); }
+}
+async function uploadToCloudinary(fileOrBlob) {
+  const formData = new FormData();
+  formData.append('file', fileOrBlob);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+    method: 'POST',
+    body: formData
+  });
+  if (!res.ok) {
+    let msg = `upload failed (${res.status})`;
+    try { const errJson = await res.json(); if (errJson && errJson.error && errJson.error.message) msg = errJson.error.message; } catch (e) { /* ignore */ }
+    throw new Error(msg);
+  }
+  const data = await res.json();
+  return { url: data.secure_url, publicId: data.public_id };
+}
+
+/* ===================== FILES / IMAGE COMPRESSION ===================== */
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+function loadImageEl(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+async function compressImage(file, maxDim, quality) {
+  const dataUrl = await fileToDataUrl(file);
+  const img = await loadImageEl(dataUrl);
+  let width = img.width, height = img.height;
+  if (width > maxDim || height > maxDim) {
+    if (width >= height) { height = Math.round(height * maxDim / width); width = maxDim; }
+    else { width = Math.round(width * maxDim / height); height = maxDim; }
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = width; canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, width, height);
+  return canvas.toDataURL('image/jpeg', quality);
+}
+async function compressImageToBlob(file, maxDim, quality) {
+  const dataUrl = await fileToDataUrl(file);
+  const img = await loadImageEl(dataUrl);
+  let width = img.width, height = img.height;
+  if (width > maxDim || height > maxDim) {
+    if (width >= height) { height = Math.round(height * maxDim / width); width = maxDim; }
+    else { width = Math.round(width * maxDim / height); height = maxDim; }
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = width; canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, width, height);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('image processing failed')), 'image/jpeg', quality);
+  });
+}
+
+/* ===================== SONG LINK PARSING ===================== */
+function detectPlatform(url) {
+  if (/open\.spotify\.com/i.test(url)) return 'spotify';
+  if (/anghami\.com/i.test(url)) return 'anghami';
+  return 'other';
+}
+function extractSpotifyTrackId(url) {
+  const m = url.match(/track\/([a-zA-Z0-9]+)/);
+  return m ? m[1] : null;
+}
+function buildSpotifyEmbedUrl(url) {
+  const id = extractSpotifyTrackId(url);
+  return id ? `https://open.spotify.com/embed/track/${id}` : null;
+}
+async function tryEnhanceSong(entry) {
+  try {
+    let oembedUrl = null;
+    if (entry.platform === 'spotify') oembedUrl = `https://open.spotify.com/oembed?url=${encodeURIComponent(entry.url)}`;
+    else if (entry.platform === 'anghami') oembedUrl = `https://www.anghami.com/oembed?url=${encodeURIComponent(entry.url)}`;
+    if (!oembedUrl) return entry;
+    const res = await fetch(oembedUrl);
+    if (!res.ok) return entry;
+    const data = await res.json();
+    if (data.title && !entry.titleManual) entry.title = data.title;
+    if (data.thumbnail_url) entry.art = data.thumbnail_url;
+    if (entry.platform === 'anghami' && data.html) {
+      const m = data.html.match(/src="([^"]+)"/);
+      if (m) entry.embedUrl = m[1];
+    }
+    return entry;
+  } catch (e) { return entry; }
+}
+
+/* ===================== PASSWORD GATE ===================== */
+function checkPassword() {
+  const inputEl = document.getElementById('gate-password-input');
+  const val = normalizeSecret(inputEl.value);
+  if (val && VALID_PASSWORDS_NORM.includes(val)) {
+    unlockApp();
+  } else {
+    document.getElementById('gate-error').textContent = "That's not quite it \u2014 try again.";
+    const card = document.getElementById('gate-card');
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+    inputEl.value = '';
+    inputEl.focus();
+  }
+}
+function toggleGatePasswordVisibility() {
+  const input = document.getElementById('gate-password-input');
+  const btn = document.getElementById('gate-toggle-btn');
+  if (input.type === 'password') { input.type = 'text'; btn.innerHTML = ICONS.eyeOff(); }
+  else { input.type = 'password'; btn.innerHTML = ICONS.eye(); }
+  input.focus();
+}
+function unlockApp() {
+  const gate = document.getElementById('gate-overlay');
+  gate.classList.add('unlocking');
+  setTimeout(() => { gate.style.display = 'none'; }, 550);
+  init();
+}
+
+/* ===================== MASTER RENDER ===================== */
+function render() {
+  renderTabs();
+  if (state.view === 'memories') renderMemories();
+  else if (state.view === 'songs') renderSongs();
+  else renderCalendar();
+  renderGroupDetailOverlay();
+  renderModal();
+  renderAnniversary();
+  document.getElementById('fab').style.display = (state.openGroupId || state.addStep) ? 'none' : 'flex';
+}
+function renderAnniversary() {
+  const el = document.getElementById('anniversary-display');
+  if (!el) return;
+  const annivYears = isAnniversaryToday();
+  if (annivYears) {
+    el.innerHTML = `<div class="anniversary-pill anniversary-pill-special">${ICONS.heart(12)} Happy ${ordinalSuffix(annivYears)} Anniversary ${ICONS.heart(12)}</div>`;
+  } else {
+    el.innerHTML = `<div class="anniversary-pill">${ICONS.heart(11)} ${esc(formatDuration(TOGETHER_SINCE))} together</div>`;
+  }
+}
+function renderTabs() {
+  document.getElementById('tab-memories').classList.toggle('active', state.view === 'memories');
+  document.getElementById('tab-songs').classList.toggle('active', state.view === 'songs');
+  document.getElementById('tab-calendar').classList.toggle('active', state.view === 'calendar');
+}
+function switchTab(view) {
+  state.view = view;
+  state.openDayDetail = null;
+  render();
+}
+
+/* ===================== EMPTY / LOADING ===================== */
+function loadingHtml(label) {
+  return `<div class="loading-state"><div class="pulse-heart">${ICONS.heart(30)}</div><p>${esc(label)}</p></div>`;
+}
+function emptyStateHtml(kind) {
+  if (kind === 'memories') return `<div class="empty-state">${ICONS.photos(40)}<p>Your story is just beginning\u2026</p><p class="empty-sub">Tap the + button to save your first moment together.</p></div>`;
+  return `<div class="empty-state">${ICONS.vinyl(40)}<p>No songs on your playlist yet.</p><p class="empty-sub">Tap the + button to add the song that feels like the two of you.</p></div>`;
+}
+
+/* ===================== MEMORIES (PHOTOS/VIDEOS) ===================== */
+function renderMemories() {
+  const container = document.getElementById('main-content');
+  const onThisDay = findOnThisDay();
+  const otdHtml = onThisDay.length ? onThisDay.map(onThisDayCardHtml).join('') : '';
+  if (state.groups.length === 0) { container.innerHTML = otdHtml + emptyStateHtml('memories'); return; }
+  const controlsHtml = listControlsHtml(state.memSort, state.memFavOnly, 'toggleMemSort', 'toggleMemFavOnly');
+  let list = state.memFavOnly ? state.groups.filter((g) => g.favorite) : state.groups.slice();
+  list = sortByDate(list, state.memSort);
+  if (list.length === 0) {
+    container.innerHTML = otdHtml + controlsHtml + `<div class="empty-state">${ICONS.heart(32)}<p>No favorite memories yet.</p><p class="empty-sub">Tap the heart on a memory to keep it close.</p></div>`;
+    return;
+  }
+  container.innerHTML = otdHtml + controlsHtml + `<div class="group-list">${list.map(groupCardHtml).join('')}</div>`;
+}
+function toggleMemSort() {
+  state.memSort = state.memSort === 'newest' ? 'oldest' : 'newest';
+  renderMemories();
+}
+function toggleMemFavOnly() {
+  state.memFavOnly = !state.memFavOnly;
+  renderMemories();
+}
+function onThisDayCardHtml(match) {
+  const m = match.group;
+  return `
+    <div class="on-this-day" onclick="openGroup('${m.id}')">
+      <div class="otd-label">${ICONS.heart(11)} ${match.yearsAgo} year${match.yearsAgo !== 1 ? 's' : ''} ago today</div>
+      <div class="otd-memory">${esc(truncate(m.memory, 90)) || 'Tap to relive this moment'}</div>
+    </div>`;
+}
+function groupCardHtml(g, index) {
+  const rot = ['-2deg', '1.5deg', '-1deg'][index % 3];
+  const delay = Math.min(index, 8) * 55;
+  const thumbStyle = g.thumb ? ` style="background-image:url('${g.thumb}')"` : '';
+  return `
+    <div class="group-card" style="--rot:${rot};animation-delay:${delay}ms" onclick="openGroup('${g.id}')">
+      <div class="stack-behind"></div>
+      <div class="group-thumb"${thumbStyle}>
+        ${!g.thumb ? ICONS.image() : ''}
+        ${g.mediaCount > 1 ? `<span class="media-badge">${g.mediaCount}</span>` : ''}
+      </div>
+      <div class="group-info">
+        <div class="group-date">${esc(formatDate(g.date))}</div>
+        <div class="group-memory">${esc(truncate(g.memory, 70))}</div>
+      </div>
+      <button class="fav-btn ${g.favorite ? 'is-fav' : ''}" onclick="toggleGroupFavorite('${g.id}', event)" aria-label="Favorite">${ICONS.heart(15)}</button>
+    </div>`;
+}
+function renderGroupDetailOverlay() {
+  const root = document.getElementById('group-detail-overlay');
+  if (!state.openGroupId) { root.classList.remove('show'); return; }
+  const g = state.groups.find((x) => x.id === state.openGroupId);
+  if (!g) { root.classList.remove('show'); return; }
+  root.classList.add('show');
+  const mediaHtml = state.openGroupMedia === null
+    ? `<div class="detail-loading">${ICONS.heart(26)}</div>`
+    : state.openGroupMedia.map(mediaItemHtml).join('');
+  root.innerHTML = `
+    <div class="detail-header">
+      <button class="icon-btn" onclick="closeGroup()" aria-label="Back">${ICONS.back()}</button>
+      <div style="display:flex;gap:8px;">
+        <button class="icon-btn" onclick="openEditGroup('${g.id}')" aria-label="Edit">${ICONS.edit(17)}</button>
+        <button class="icon-btn ${g.favorite ? 'is-fav' : ''}" onclick="toggleGroupFavorite('${g.id}')" aria-label="Favorite">${ICONS.heart(17)}</button>
+        <button class="icon-btn" onclick="confirmDeleteGroup('${g.id}')" aria-label="Delete">${ICONS.trash()}</button>
+      </div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-date">${esc(formatDate(g.date))}</div>
+      ${g.memory ? `<div class="detail-memory">${esc(g.memory)}</div>` : ''}
+      <div class="detail-media">${mediaHtml}</div>
+    </div>`;
+}
+function mediaItemHtml(item) {
+  if (!item) return '';
+  if (item.type === 'image') return `<div class="media-item fade-in"><img src="${esc(item.url)}" alt="" loading="lazy"></div>`;
+  if (item.type === 'video') return `<div class="media-item fade-in"><video src="${esc(item.url)}" controls playsinline preload="metadata"></video></div>`;
+  if (item.type === 'video-link') return `<a class="media-item video-link fade-in" href="${esc(item.url)}" target="_blank" rel="noopener">${ICONS.play()}<span>Watch video</span></a>`;
+  return '';
+}
+async function openGroup(id) {
+  const group = state.groups.find((g) => g.id === id);
+  if (!group) return;
+  state.openGroupId = id;
+  state.openGroupMedia = null;
+  render();
+  const raw = await storageGet(`group-media-${id}`);
+  let items = [];
+  try { items = raw ? JSON.parse(raw) : []; } catch (e) { items = []; }
+  if (state.openGroupId === id) { state.openGroupMedia = items; render(); }
+}
+function closeGroup() {
+  state.openGroupId = null;
+  state.openGroupMedia = null;
+  render();
+}
+async function openEditGroup(id) {
+  const group = state.groups.find((g) => g.id === id);
+  if (!group) return;
+  state.editingId = id;
+  state.editingMedia = null;
+  state.pendingFiles = [];
+  state.addStep = 'photo-edit';
+  render();
+  const raw = await storageGet(`group-media-${id}`);
+  let items = [];
+  try { items = raw ? JSON.parse(raw) : []; } catch (e) { items = []; }
+  if (state.addStep === 'photo-edit' && state.editingId === id) {
+    state.editingMedia = items;
+    renderPreviewGrid();
+  }
+}
+async function toggleGroupFavorite(id, event) {
+  if (event) event.stopPropagation();
+  const g = state.groups.find((x) => x.id === id);
+  if (!g) return;
+  g.favorite = !g.favorite;
+  render();
+  await storageSet('groups-index', JSON.stringify(state.groups));
+}
+function confirmDeleteGroup(id) {
+  askConfirm('Delete this memory forever?', function () { deleteGroupConfirmed(id); });
+}
+async function deleteGroupConfirmed(id) {
+  const group = state.groups.find((g) => g.id === id);
+  if (!group) return;
+  // Note: this removes the memory from the app completely. The underlying
+  // Cloudinary files aren't deleted (that needs a signed/backend request),
+  // but they're no longer referenced or visible anywhere.
+  await storageDelete(`group-media-${id}`);
+  state.groups = state.groups.filter((g) => g.id !== id);
+  await storageSet('groups-index', JSON.stringify(state.groups));
+  state.openGroupId = null;
+  state.openGroupMedia = null;
+  render();
+  toast('Memory deleted');
+}
+
+/* ===================== SONGS ===================== */
+function renderSongs() {
+  const container = document.getElementById('main-content');
+  if (state.songs.length === 0) { container.innerHTML = emptyStateHtml('songs'); return; }
+  const controlsHtml = listControlsHtml(state.songSort, state.songFavOnly, 'toggleSongSort', 'toggleSongFavOnly');
+  let list = state.songFavOnly ? state.songs.filter((s) => s.favorite) : state.songs.slice();
+  list = sortByDate(list, state.songSort);
+  if (list.length === 0) {
+    container.innerHTML = controlsHtml + `<div class="empty-state">${ICONS.vinyl(40)}<p>No favorite songs yet.</p><p class="empty-sub">Tap the heart on a song to keep it close.</p></div>`;
+    return;
+  }
+  container.innerHTML = controlsHtml + `<div class="song-list">${list.map(songCardHtml).join('')}</div>`;
+}
+function toggleSongSort() {
+  state.songSort = state.songSort === 'newest' ? 'oldest' : 'newest';
+  renderSongs();
+}
+function toggleSongFavOnly() {
+  state.songFavOnly = !state.songFavOnly;
+  renderSongs();
+}
+function songCardHtml(s, index) {
+  const isOpen = state.playingSongId === s.id;
+  const delay = Math.min(index, 8) * 55;
+  const discStyle = s.art ? ` style="background-image:url('${esc(s.art)}')"` : '';
+  const platformLabel = s.platform === 'anghami' ? 'Anghami' : (s.platform === 'spotify' ? 'Spotify' : 'link');
+  return `
+    <div class="song-card" data-song-id="${s.id}" style="animation-delay:${delay}ms">
+      <div class="song-row" onclick="toggleSong('${s.id}')">
+        <div class="disc-wrap ${isOpen ? 'spin' : ''}">
+          <div class="disc"${discStyle}>${!s.art ? ICONS.note() : ''}</div>
+        </div>
+        <div class="song-info">
+          <div class="song-title">${esc(s.title)}</div>
+          ${s.artist ? `<div class="song-artist">${esc(s.artist)}</div>` : ''}
+        </div>
+        <button class="fav-btn ${s.favorite ? 'is-fav' : ''}" onclick="toggleSongFavorite('${s.id}', event)" aria-label="Favorite">${ICONS.heart(14)}</button>
+        <button class="toggle-btn" aria-label="${isOpen ? 'Collapse' : 'Play'}">${isOpen ? ICONS.chevronUp() : ICONS.play()}</button>
+      </div>
+      ${isOpen ? `
+      <div class="song-expanded" data-for="${s.id}">
+        ${s.embedUrl
+          ? `<iframe src="${esc(s.embedUrl)}" width="100%" height="80" frameborder="0" allow="encrypted-media; clipboard-write; fullscreen; picture-in-picture" loading="lazy"></iframe>`
+          : `<a class="open-link-btn" href="${esc(s.url)}" target="_blank" rel="noopener">${ICONS.external()} Open in ${platformLabel}</a>`}
+        ${s.date ? `<div class="song-date">${esc(formatDate(s.date))}</div>` : ''}
+        ${s.memory ? `<div class="song-memory">${esc(s.memory)}</div>` : ''}
+        <div class="song-actions">
+          <button class="delete-link" onclick="openEditSong('${s.id}')">${ICONS.edit(13)} Edit</button>
+          <button class="delete-link" onclick="confirmDeleteSong('${s.id}')">${ICONS.trash(13)} Remove</button>
+        </div>
+      </div>` : ''}
+    </div>`;
+}
+function toggleSong(id) {
+  if (state.playingSongId === id) {
+    const el = document.querySelector('.song-expanded[data-for="' + id + '"]');
+    if (el) {
+      el.classList.add('closing');
+      setTimeout(() => { state.playingSongId = null; render(); }, 190);
+    } else {
+      state.playingSongId = null;
+      render();
+    }
+  } else {
+    state.playingSongId = id;
+    render();
+  }
+}
+async function toggleSongFavorite(id, event) {
+  if (event) event.stopPropagation();
+  const s = state.songs.find((x) => x.id === id);
+  if (!s) return;
+  s.favorite = !s.favorite;
+  render();
+  await storageSet('songs-index', JSON.stringify(state.songs));
+}
+function jumpToSong(id) {
+  state.view = 'songs';
+  state.playingSongId = id;
+  render();
+  setTimeout(() => {
+    const el = document.querySelector('.song-card[data-song-id="' + id + '"]');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 60);
+}
+function confirmDeleteSong(id) {
+  askConfirm('Remove this song?', function () { deleteSongConfirmed(id); });
+}
+function openEditSong(id) {
+  const s = state.songs.find((x) => x.id === id);
+  if (!s) return;
+  state.editingId = id;
+  state.addStep = 'song-edit';
+  render();
+}
+async function deleteSongConfirmed(id) {
+  state.songs = state.songs.filter((s) => s.id !== id);
+  await storageSet('songs-index', JSON.stringify(state.songs));
+  render();
+  toast('Song removed');
+}
+
+/* ===================== CALENDAR ===================== */
+function renderCalendar() {
+  const container = document.getElementById('main-content');
+  container.innerHTML = `
+    ${renderCalendarGrid()}
+    ${dayDetailHtml()}
+    <h3 class="section-heading">Special Dates</h3>
+    ${specialDatesListHtml()}`;
+}
+function renderCalendarGrid() {
+  const year = state.calendarYear;
+  const month = state.calendarMonth;
+  const firstDay = new Date(year, month, 1);
+  const startWeekday = firstDay.getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const monthLabel = firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  const dayMarks = {};
+  for (const g of state.groups) {
+    const d = parseDateStr(g.date);
+    if (d && d.getFullYear() === year && d.getMonth() === month) dayMarks[d.getDate()] = true;
+  }
+  for (const s of state.songs) {
+    const d = parseDateStr(s.date);
+    if (d && d.getFullYear() === year && d.getMonth() === month) dayMarks[d.getDate()] = true;
+  }
+  for (const sd of state.specialDates) {
+    const d = parseDateStr(sd.date);
+    if (d && d.getMonth() === month && year >= d.getFullYear()) dayMarks[d.getDate()] = true;
+  }
+  {
+    const d = parseDateStr(TOGETHER_SINCE);
+    if (d && d.getMonth() === month && year >= d.getFullYear()) dayMarks[d.getDate()] = true;
+  }
+
+  const today = new Date();
+  let cells = '';
+  for (let i = 0; i < startWeekday; i++) cells += `<div class="cal-cell cal-cell-empty"></div>`;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === day;
+    const isSelected = state.openDayDetail === `${year}-${month}-${day}`;
+    cells += `<div class="cal-cell ${isToday ? 'cal-today' : ''} ${isSelected ? 'cal-selected' : ''}" onclick="openDayDetail(${year},${month},${day})">
+      <span class="cal-daynum">${day}</span>
+      ${dayMarks[day] ? '<span class="cal-dot"></span>' : ''}
+    </div>`;
+  }
+
+  return `
+    <div class="cal-grid-wrap">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="shiftCalendarMonth(-1)" aria-label="Previous month">${ICONS.back()}</button>
+        <span class="cal-month-label">${monthLabel}</span>
+        <button class="cal-nav-btn cal-nav-next" onclick="shiftCalendarMonth(1)" aria-label="Next month">${ICONS.back()}</button>
+      </div>
+      <div class="cal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+      <div class="cal-grid">${cells}</div>
+    </div>`;
+}
+function shiftCalendarMonth(delta) {
+  state.calendarMonth += delta;
+  if (state.calendarMonth > 11) { state.calendarMonth = 0; state.calendarYear++; }
+  if (state.calendarMonth < 0) { state.calendarMonth = 11; state.calendarYear--; }
+  state.openDayDetail = null;
+  renderCalendar();
+}
+function openDayDetail(year, month, day) {
+  const key = `${year}-${month}-${day}`;
+  state.openDayDetail = state.openDayDetail === key ? null : key;
+  renderCalendar();
+}
+function dayDetailHtml() {
+  if (!state.openDayDetail) return '';
+  const [year, month, day] = state.openDayDetail.split('-').map(Number);
+  const items = [];
+  for (const g of state.groups) {
+    const d = parseDateStr(g.date);
+    if (d && d.getFullYear() === year && d.getMonth() === month && d.getDate() === day) {
+      items.push(`<div class="day-item" onclick="openGroup('${g.id}')">${ICONS.image(14)}<span>${esc(truncate(g.memory, 50)) || 'A memory together'}</span></div>`);
+    }
+  }
+  for (const s of state.songs) {
+    const d = parseDateStr(s.date);
+    if (d && d.getFullYear() === year && d.getMonth() === month && d.getDate() === day) {
+      items.push(`<div class="day-item" onclick="jumpToSong('${s.id}')">${ICONS.note(14)}<span>${esc(s.title)}</span></div>`);
+    }
+  }
+  for (const sd of state.specialDates) {
+    const d = parseDateStr(sd.date);
+    if (d && d.getMonth() === month && d.getDate() === day) {
+      items.push(`<div class="day-item">${ICONS.heart(12)}<span>${esc(sd.label)}</span></div>`);
+    }
+  }
+  {
+    const d = parseDateStr(TOGETHER_SINCE);
+    if (d && d.getMonth() === month && d.getDate() === day) {
+      items.push(`<div class="day-item">${ICONS.heart(12)}<span>The day it all began</span></div>`);
+    }
+  }
+  if (items.length === 0) return `<div class="day-detail"><p class="day-detail-empty">Nothing saved on this day yet.</p></div>`;
+  return `<div class="day-detail">${items.join('')}</div>`;
+}
+function daysUntilNext(dateStr) {
+  const d = parseDateStr(dateStr);
+  if (!d) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let next = new Date(today.getFullYear(), d.getMonth(), d.getDate());
+  if (next < today) next = new Date(today.getFullYear() + 1, d.getMonth(), d.getDate());
+  const days = Math.round((next - today) / 86400000);
+  const iteration = next.getFullYear() - d.getFullYear();
+  return { days, iteration };
+}
+function specialDatesListHtml() {
+  if (state.specialDates.length === 0) {
+    return `<div class="empty-state">${ICONS.heart(32)}<p>No special dates yet.</p><p class="empty-sub">Add birthdays or yearly moments \u2014 we'll count down to each one.</p></div>`;
+  }
+  const controlsHtml = listControlsHtml(state.sdSort, state.sdFavOnly, 'toggleSdSort', 'toggleSdFavOnly');
+  let list = state.sdFavOnly ? state.specialDates.filter((sd) => sd.favorite) : state.specialDates.slice();
+  list = sortByDate(list, state.sdSort);
+  if (list.length === 0) {
+    return controlsHtml + `<div class="empty-state">${ICONS.heart(32)}<p>No favorite dates yet.</p><p class="empty-sub">Tap the heart on a date to keep it close.</p></div>`;
+  }
+  return controlsHtml + `<div class="special-dates-list">${list.map(specialDateCardHtml).join('')}</div>`;
+}
+function specialDateCardHtml(sd) {
+  const info = daysUntilNext(sd.date);
+  if (!info) return '';
+  const isToday = info.days === 0;
+  return `
+    <div class="special-date-card ${isToday ? 'is-today' : ''}">
+      <div class="sd-info">
+        <div class="sd-label">${esc(sd.label)}</div>
+        <div class="sd-original">${esc(formatDate(sd.date))}${info.iteration > 0 ? ` \u00b7 ${ordinalSuffix(info.iteration)} year` : ''}</div>
+      </div>
+      <div class="sd-countdown">
+        ${isToday ? `<span class="sd-today-badge">${ICONS.heart(12)} Today!</span>` : `<span class="sd-days">${info.days}</span><span class="sd-days-label">day${info.days !== 1 ? 's' : ''} to go</span>`}
+      </div>
+      <button class="fav-btn ${sd.favorite ? 'is-fav' : ''}" onclick="toggleSdFavorite('${sd.id}', event)" aria-label="Favorite">${ICONS.heart(14)}</button>
+      <button class="sd-edit" onclick="openEditSpecialDate('${sd.id}')" aria-label="Edit">${ICONS.edit(15)}</button>
+      <button class="sd-delete" onclick="confirmDeleteSpecialDate('${sd.id}')" aria-label="Delete">${ICONS.trash(13)}</button>
+    </div>`;
+}
+function toggleSdSort() {
+  state.sdSort = state.sdSort === 'newest' ? 'oldest' : 'newest';
+  renderCalendar();
+}
+function toggleSdFavOnly() {
+  state.sdFavOnly = !state.sdFavOnly;
+  renderCalendar();
+}
+async function toggleSdFavorite(id, event) {
+  if (event) event.stopPropagation();
+  const sd = state.specialDates.find((x) => x.id === id);
+  if (!sd) return;
+  sd.favorite = !sd.favorite;
+  renderCalendar();
+  await storageSet('special-dates', JSON.stringify(state.specialDates));
+}
+function confirmDeleteSpecialDate(id) {
+  askConfirm('Remove this special date?', function () { deleteSpecialDateConfirmed(id); });
+}
+function openEditSpecialDate(id) {
+  const sd = state.specialDates.find((x) => x.id === id);
+  if (!sd) return;
+  state.editingId = id;
+  state.addStep = 'special-edit';
+  render();
+}
+async function deleteSpecialDateConfirmed(id) {
+  state.specialDates = state.specialDates.filter((sd) => sd.id !== id);
+  await storageSet('special-dates', JSON.stringify(state.specialDates));
+  render();
+  toast('Removed');
+}
+
+/* ===================== ADD FLOW (MODAL) ===================== */
+function openAddModal() {
+  state.addStep = 'choose';
+  state.pendingFiles = [];
+  render();
+}
+function closeModal() {
+  state.addStep = null;
+  state.pendingFiles = [];
+  state.editingId = null;
+  state.editingMedia = null;
+  render();
+}
+function chooseAddType(type) {
+  if (type === 'photo') document.getElementById('file-input').click();
+  else if (type === 'song') { state.addStep = 'song-form'; render(); }
+  else { state.addStep = 'special-date-form'; render(); }
+}
+function renderModal() {
+  const root = document.getElementById('modal-root');
+  if (!state.addStep) { root.classList.remove('show'); return; }
+  root.classList.add('show');
+  if (state.addStep === 'choose') root.innerHTML = chooseStepHtml();
+  else if (state.addStep === 'photo-form') root.innerHTML = photoFormHtml();
+  else if (state.addStep === 'photo-edit') {
+    const g = state.groups.find((x) => x.id === state.editingId);
+    root.innerHTML = g ? photoEditFormHtml(g) : '';
+  }
+  else if (state.addStep === 'song-form') root.innerHTML = songFormHtml();
+  else if (state.addStep === 'song-edit') {
+    const s = state.songs.find((x) => x.id === state.editingId);
+    root.innerHTML = s ? songEditFormHtml(s) : '';
+  }
+  else if (state.addStep === 'special-date-form') root.innerHTML = specialDateFormHtml();
+  else if (state.addStep === 'special-edit') {
+    const sd = state.specialDates.find((x) => x.id === state.editingId);
+    root.innerHTML = sd ? specialDateEditFormHtml(sd) : '';
+  }
+}
+function chooseStepHtml() {
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">Add a memory</h3>
+      <div class="choice-grid">
+        <button class="choice-card" onclick="chooseAddType('photo')">${ICONS.photos(24)}<span>Photo / Video</span></button>
+        <button class="choice-card" onclick="chooseAddType('song')">${ICONS.vinyl(24)}<span>A Song</span></button>
+        <button class="choice-card" onclick="chooseAddType('special')">${ICONS.heart(21)}<span>Special Date</span></button>
+      </div>
+      <button class="sheet-cancel" onclick="closeModal()">Cancel</button>
+    </div>`;
+}
+function previewThumbsHtml() {
+  const previews = state.pendingFiles.map((f, i) => {
+    const url = URL.createObjectURL(f);
+    const isVideo = f.type.startsWith('video/');
+    const tooBig = isVideo && f.size > VIDEO_MAX_BYTES;
+    return `<div class="preview-thumb ${tooBig ? 'too-big' : ''}">
+      ${isVideo ? `<video src="${url}" muted></video>` : `<img src="${url}">`}
+      ${tooBig ? `<span class="too-big-badge">Too large</span>` : ''}
+      <button class="remove-thumb" onclick="removePendingFile(${i})" aria-label="Remove">${ICONS.close(11)}</button>
+    </div>`;
+  }).join('');
+  return previews + `<button class="add-more-thumb" onclick="document.getElementById('file-input').click()" aria-label="Add more">${ICONS.plus(20)}</button>`;
+}
+function editMediaGridHtml() {
+  const existingThumbs = (state.editingMedia || []).map((item, i) => {
+    let inner;
+    if (item.type === 'image') inner = `<img src="${esc(item.url)}">`;
+    else if (item.type === 'video') inner = `<video src="${esc(item.url)}" muted></video>`;
+    else inner = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--garnet);background:var(--blush);">${ICONS.play(20)}</div>`;
+    return `<div class="preview-thumb">
+      ${inner}
+      <button class="remove-thumb" onclick="removeExistingMedia(${i})" aria-label="Remove">${ICONS.close(11)}</button>
+    </div>`;
+  }).join('');
+  return existingThumbs + previewThumbsHtml();
+}
+function removeExistingMedia(i) {
+  state.editingMedia.splice(i, 1);
+  renderPreviewGrid();
+}
+function renderPreviewGrid() {
+  const grid = document.getElementById('preview-grid');
+  if (grid) grid.innerHTML = state.addStep === 'photo-edit' ? editMediaGridHtml() : previewThumbsHtml();
+}
+function removePendingFile(i) {
+  state.pendingFiles.splice(i, 1);
+  renderPreviewGrid();
+}
+function photoFormHtml() {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">New Memory</h3>
+      <div class="preview-grid" id="preview-grid">${previewThumbsHtml()}</div>
+      <label class="field-label">Date</label>
+      <input type="date" id="photo-date-input" class="field-input" value="${today}" max="${today}">
+      <label class="field-label">The memory</label>
+      <textarea id="photo-memory-input" class="field-input field-textarea" placeholder="Tell the story behind this moment\u2026"></textarea>
+      <label class="field-label">Or add a video link instead (YouTube, Drive\u2026)</label>
+      <input type="url" id="photo-videolink-input" class="field-input" placeholder="https://...">
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="photo-save-btn" onclick="submitPhotoForm()">Save Memory</button>
+      </div>
+    </div>`;
+}
+function photoEditFormHtml(group) {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">Edit Memory</h3>
+      <div class="preview-grid" id="preview-grid">${editMediaGridHtml()}</div>
+      <label class="field-label">Date</label>
+      <input type="date" id="photo-date-input" class="field-input" value="${esc(group.date)}" max="${today}">
+      <label class="field-label">The memory</label>
+      <textarea id="photo-memory-input" class="field-input field-textarea" placeholder="Tell the story behind this moment\u2026">${esc(group.memory || '')}</textarea>
+      <label class="field-label">Add another video link (optional)</label>
+      <input type="url" id="photo-videolink-input" class="field-input" placeholder="https://...">
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="photo-save-btn" onclick="submitPhotoEditForm('${group.id}')">Save Changes</button>
+      </div>
+    </div>`;
+}
+function songFormHtml() {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">New Song</h3>
+      <label class="field-label">Spotify or Anghami link</label>
+      <input type="url" id="song-url-input" class="field-input" placeholder="https://open.spotify.com/track/\u2026">
+      <label class="field-label">Song title</label>
+      <input type="text" id="song-title-input" class="field-input" placeholder="We'll try to detect this, or type it">
+      <label class="field-label">Artist (optional)</label>
+      <input type="text" id="song-artist-input" class="field-input" placeholder="Artist name">
+      <label class="field-label">Date (optional)</label>
+      <input type="date" id="song-date-input" class="field-input" max="${today}">
+      <label class="field-label">The memory (optional)</label>
+      <textarea id="song-memory-input" class="field-input field-textarea" placeholder="Why does this song matter to you two?"></textarea>
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="song-save-btn" onclick="submitSongForm()">Save Song</button>
+      </div>
+    </div>`;
+}
+function songEditFormHtml(s) {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">Edit Song</h3>
+      <label class="field-label">Spotify or Anghami link</label>
+      <input type="url" id="song-url-input" class="field-input" value="${esc(s.url)}" placeholder="https://open.spotify.com/track/\u2026">
+      <label class="field-label">Song title</label>
+      <input type="text" id="song-title-input" class="field-input" value="${esc(s.title)}">
+      <label class="field-label">Artist (optional)</label>
+      <input type="text" id="song-artist-input" class="field-input" value="${esc(s.artist || '')}">
+      <label class="field-label">Date (optional)</label>
+      <input type="date" id="song-date-input" class="field-input" value="${esc(s.date || '')}" max="${today}">
+      <label class="field-label">The memory (optional)</label>
+      <textarea id="song-memory-input" class="field-input field-textarea">${esc(s.memory || '')}</textarea>
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="song-save-btn" onclick="submitSongEditForm('${s.id}')">Save Changes</button>
+      </div>
+    </div>`;
+}
+function specialDateFormHtml() {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">New Special Date</h3>
+      <p class="sheet-subtitle">A birthday, an anniversary \u2014 anything worth counting down to, every year.</p>
+      <label class="field-label">What is it?</label>
+      <input type="text" id="special-label-input" class="field-input" placeholder="e.g. Parthenia's Birthday">
+      <label class="field-label">Date</label>
+      <input type="date" id="special-date-input" class="field-input" max="${today}">
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="special-save-btn" onclick="submitSpecialDateForm()">Save</button>
+      </div>
+    </div>`;
+}
+function specialDateEditFormHtml(sd) {
+  const today = new Date().toISOString().slice(0, 10);
+  return `
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title">Edit Special Date</h3>
+      <label class="field-label">What is it?</label>
+      <input type="text" id="special-label-input" class="field-input" value="${esc(sd.label)}">
+      <label class="field-label">Date</label>
+      <input type="date" id="special-date-input" class="field-input" value="${esc(sd.date)}" max="${today}">
+      <div class="sheet-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="special-save-btn" onclick="submitSpecialDateEditForm('${sd.id}')">Save Changes</button>
+      </div>
+    </div>`;
+}
+function setModalBusy(busy, kind, progressLabel) {
+  const id = kind === 'photo' ? 'photo-save-btn' : kind === 'song' ? 'song-save-btn' : 'special-save-btn';
+  const isEdit = state.addStep === 'photo-edit' || state.addStep === 'song-edit' || state.addStep === 'special-edit';
+  const label = isEdit ? 'Save Changes' : (kind === 'photo' ? 'Save Memory' : kind === 'song' ? 'Save Song' : 'Save');
+  const btn = document.getElementById(id);
+  if (btn) { btn.disabled = busy; btn.textContent = busy ? (progressLabel || 'Saving\u2026') : label; }
+}
+
+/* ===================== SUBMIT: PHOTO/VIDEO MEMORY ===================== */
+async function submitPhotoForm() {
+  const date = (document.getElementById('photo-date-input') || {}).value || '';
+  const memory = ((document.getElementById('photo-memory-input') || {}).value || '').trim();
+  const videoLink = ((document.getElementById('photo-videolink-input') || {}).value || '').trim();
+
+  if (!date) { toast('Please choose a date', true); return; }
+  if (state.pendingFiles.length === 0 && !videoLink) { toast('Please add at least one photo or a video link', true); return; }
+
+  setModalBusy(true, 'photo');
+  try {
+    const id = 'g' + Date.now() + Math.random().toString(36).slice(2, 7);
+    const mediaRefs = [];
+    let coverThumb = null;
+    const failReasons = [];
+    const total = state.pendingFiles.length;
+    let done = 0;
+
+    for (const file of state.pendingFiles) {
+      const isImage = file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|heic|heif)$/i.test(file.name || '');
+      const isVideo = file.type.startsWith('video/') || /\.(mp4|mov|webm|m4v|avi)$/i.test(file.name || '');
+      try {
+        if (isImage) {
+          const blob = await compressImageToBlob(file, FULL_IMG_MAX_DIM, FULL_IMG_QUALITY);
+          const uploaded = await uploadToCloudinary(blob);
+          mediaRefs.push({ type: 'image', url: uploaded.url, publicId: uploaded.publicId });
+          if (!coverThumb) { try { coverThumb = await compressImage(file, THUMB_MAX_DIM, THUMB_QUALITY); } catch (e2) { /* thumb optional */ } }
+        } else if (isVideo) {
+          if (file.size <= VIDEO_MAX_BYTES) {
+            const uploaded = await uploadToCloudinary(file);
+            mediaRefs.push({ type: 'video', url: uploaded.url, publicId: uploaded.publicId });
+          } else {
+            failReasons.push(`${file.name || 'a video'} is over ${VIDEO_MAX_MB}MB`);
+          }
+        } else {
+          failReasons.push(`${file.name || 'a file'} isn't a supported photo/video type`);
+        }
+      } catch (e) {
+        failReasons.push(`${file.name || 'a file'} couldn't upload (${(e && e.message) || 'unknown issue'})`);
+      }
+      done++;
+      setModalBusy(true, 'photo', `Uploading ${done}/${total}\u2026`);
+    }
+
+    if (videoLink) mediaRefs.push({ type: 'video-link', url: videoLink, publicId: null });
+
+    if (mediaRefs.length === 0) {
+      toast(failReasons[0] || 'Nothing could be saved \u2014 try a smaller file or a link', true);
+      return;
+    }
+
+    const mediaOk = await storageSet(`group-media-${id}`, JSON.stringify(mediaRefs));
+    if (!mediaOk) { toast('Could not save \u2014 check your Firebase setup and connection, then try again', true); return; }
+
+    const summary = { id, date, memory, thumb: coverThumb, mediaCount: mediaRefs.length, favorite: false };
+    state.groups.unshift(summary);
+    const ok = await storageSet('groups-index', JSON.stringify(state.groups));
+    if (!ok) { state.groups.shift(); toast('Could not save \u2014 check your Firebase setup and connection, then try again', true); return; }
+
+    closeModal();
+    toast(failReasons.length ? `Saved! But ${failReasons.length} file${failReasons.length > 1 ? 's' : ''} didn't make it: ${failReasons[0]}` : 'Memory saved \u{1F495}', !!failReasons.length);
+  } catch (e) {
+    toast('Something went wrong: ' + ((e && e.message) || 'unknown error'), true);
+  } finally {
+    setModalBusy(false, 'photo');
+  }
+}
+
+async function submitPhotoEditForm(id) {
+  const group = state.groups.find((g) => g.id === id);
+  if (!group) { closeModal(); return; }
+  const date = (document.getElementById('photo-date-input') || {}).value || '';
+  const memory = ((document.getElementById('photo-memory-input') || {}).value || '').trim();
+  const videoLink = ((document.getElementById('photo-videolink-input') || {}).value || '').trim();
+
+  if (!date) { toast('Please choose a date', true); return; }
+  const existingMedia = state.editingMedia || [];
+  if (existingMedia.length === 0 && state.pendingFiles.length === 0 && !videoLink) {
+    toast('A memory needs at least one photo, video, or link', true);
+    return;
+  }
+
+  setModalBusy(true, 'photo');
+  try {
+    const mediaRefs = existingMedia.slice();
+    const failReasons = [];
+    const total = state.pendingFiles.length;
+    let done = 0;
+    let newCoverThumb = null;
+
+    for (const file of state.pendingFiles) {
+      const isImage = file.type.startsWith('image/') || /\.(jpe?g|png|gif|webp|bmp|heic|heif)$/i.test(file.name || '');
+      const isVideo = file.type.startsWith('video/') || /\.(mp4|mov|webm|m4v|avi)$/i.test(file.name || '');
+      try {
+        if (isImage) {
+          const blob = await compressImageToBlob(file, FULL_IMG_MAX_DIM, FULL_IMG_QUALITY);
+          const uploaded = await uploadToCloudinary(blob);
+          mediaRefs.push({ type: 'image', url: uploaded.url, publicId: uploaded.publicId });
+          if (!newCoverThumb) { try { newCoverThumb = await compressImage(file, THUMB_MAX_DIM, THUMB_QUALITY); } catch (e2) { /* thumb optional */ } }
+        } else if (isVideo) {
+          if (file.size <= VIDEO_MAX_BYTES) {
+            const uploaded = await uploadToCloudinary(file);
+            mediaRefs.push({ type: 'video', url: uploaded.url, publicId: uploaded.publicId });
+          } else {
+            failReasons.push(`${file.name || 'a video'} is over ${VIDEO_MAX_MB}MB`);
+          }
+        } else {
+          failReasons.push(`${file.name || 'a file'} isn't a supported photo/video type`);
+        }
+      } catch (e) {
+        failReasons.push(`${file.name || 'a file'} couldn't upload (${(e && e.message) || 'unknown issue'})`);
+      }
+      done++;
+      setModalBusy(true, 'photo', `Uploading ${done}/${total}\u2026`);
+    }
+
+    if (videoLink) mediaRefs.push({ type: 'video-link', url: videoLink, publicId: null });
+
+    if (mediaRefs.length === 0) {
+      toast(failReasons[0] || 'A memory needs at least one photo, video, or link', true);
+      return;
+    }
+
+    const mediaOk = await storageSet(`group-media-${id}`, JSON.stringify(mediaRefs));
+    if (!mediaOk) { toast('Could not save \u2014 check your connection and try again', true); return; }
+
+    const hasImages = mediaRefs.some((m) => m.type === 'image');
+    if (!hasImages) group.thumb = null;
+    else if (!group.thumb && newCoverThumb) group.thumb = newCoverThumb;
+    group.date = date;
+    group.memory = memory;
+    group.mediaCount = mediaRefs.length;
+
+    const ok = await storageSet('groups-index', JSON.stringify(state.groups));
+    if (!ok) { toast('Could not save the updated memory list \u2014 try again', true); return; }
+
+    if (state.openGroupId === id) state.openGroupMedia = mediaRefs;
+    closeModal();
+    toast(failReasons.length ? `Saved! But ${failReasons.length} file${failReasons.length > 1 ? 's' : ''} didn't make it: ${failReasons[0]}` : 'Memory updated \u{1F495}', !!failReasons.length);
+  } catch (e) {
+    toast('Something went wrong: ' + ((e && e.message) || 'unknown error'), true);
+  } finally {
+    setModalBusy(false, 'photo');
+  }
+}
+
+/* ===================== SUBMIT: SONG ===================== */
+async function submitSongForm() {
+  const url = ((document.getElementById('song-url-input') || {}).value || '').trim();
+  const titleInput = ((document.getElementById('song-title-input') || {}).value || '').trim();
+  const artistInput = ((document.getElementById('song-artist-input') || {}).value || '').trim();
+  const date = (document.getElementById('song-date-input') || {}).value || '';
+  const memory = ((document.getElementById('song-memory-input') || {}).value || '').trim();
+
+  if (!url) { toast('Please paste a song link', true); return; }
+
+  setModalBusy(true, 'song');
+  const platform = detectPlatform(url);
+  let entry = {
+    id: 's' + Date.now() + Math.random().toString(36).slice(2, 7),
+    url, platform,
+    embedUrl: platform === 'spotify' ? buildSpotifyEmbedUrl(url) : null,
+    title: titleInput || 'Our Song',
+    titleManual: !!titleInput,
+    artist: artistInput || '',
+    art: null,
+    favorite: false,
+    date, memory
+  };
+  entry = (await withTimeout(tryEnhanceSong(entry), 3500)) || entry;
+
+  state.songs.unshift(entry);
+  const ok = await storageSet('songs-index', JSON.stringify(state.songs));
+  setModalBusy(false, 'song');
+  if (!ok) { state.songs.shift(); toast('Could not save \u2014 check your Firebase setup and connection, then try again', true); return; }
+
+  closeModal();
+  toast('Song added \u{1F495}');
+}
+
+async function submitSongEditForm(id) {
+  const s = state.songs.find((x) => x.id === id);
+  if (!s) { closeModal(); return; }
+  const url = ((document.getElementById('song-url-input') || {}).value || '').trim();
+  const titleInput = ((document.getElementById('song-title-input') || {}).value || '').trim();
+  const artistInput = ((document.getElementById('song-artist-input') || {}).value || '').trim();
+  const date = (document.getElementById('song-date-input') || {}).value || '';
+  const memory = ((document.getElementById('song-memory-input') || {}).value || '').trim();
+
+  if (!url) { toast('Please paste a song link', true); return; }
+  if (!titleInput) { toast('Please give the song a title', true); return; }
+
+  setModalBusy(true, 'song');
+  const urlChanged = url !== s.url;
+  const platform = detectPlatform(url);
+  s.url = url;
+  s.platform = platform;
+  if (urlChanged) s.embedUrl = platform === 'spotify' ? buildSpotifyEmbedUrl(url) : null;
+  s.title = titleInput;
+  s.titleManual = true;
+  s.artist = artistInput;
+  s.date = date;
+  s.memory = memory;
+  if (urlChanged) {
+    const enhanced = await withTimeout(tryEnhanceSong(Object.assign({}, s)), 3500);
+    if (enhanced) { s.embedUrl = enhanced.embedUrl; s.art = enhanced.art; }
+  }
+
+  const ok = await storageSet('songs-index', JSON.stringify(state.songs));
+  setModalBusy(false, 'song');
+  if (!ok) { toast('Could not save \u2014 check your Firebase setup and connection, then try again', true); return; }
+
+  closeModal();
+  toast('Song updated \u{1F495}');
+}
+
+async function submitSpecialDateForm() {
+  const label = ((document.getElementById('special-label-input') || {}).value || '').trim();
+  const date = (document.getElementById('special-date-input') || {}).value || '';
+  if (!label) { toast('Please give it a name', true); return; }
+  if (!date) { toast('Please choose a date', true); return; }
+  setModalBusy(true, 'special');
+  try {
+    const entry = { id: 'sd' + Date.now() + Math.random().toString(36).slice(2, 7), label, date, favorite: false };
+    state.specialDates.push(entry);
+    const ok = await storageSet('special-dates', JSON.stringify(state.specialDates));
+    if (!ok) {
+      state.specialDates.pop();
+      toast('Could not save \u2014 check your Firebase setup and connection, then try again', true);
+      return;
+    }
+    closeModal();
+    toast('Special date added \u{1F495}');
+  } catch (e) {
+    toast('Something went wrong: ' + ((e && e.message) || 'unknown error'), true);
+  } finally {
+    setModalBusy(false, 'special');
+  }
+}
+
+async function submitSpecialDateEditForm(id) {
+  const sd = state.specialDates.find((x) => x.id === id);
+  if (!sd) { closeModal(); return; }
+  const label = ((document.getElementById('special-label-input') || {}).value || '').trim();
+  const date = (document.getElementById('special-date-input') || {}).value || '';
+  if (!label) { toast('Please give it a name', true); return; }
+  if (!date) { toast('Please choose a date', true); return; }
+  setModalBusy(true, 'special');
+  try {
+    sd.label = label;
+    sd.date = date;
+    const ok = await storageSet('special-dates', JSON.stringify(state.specialDates));
+    if (!ok) { toast('Could not save \u2014 check your connection and try again', true); return; }
+    closeModal();
+    toast('Special date updated \u{1F495}');
+  } catch (e) {
+    toast('Something went wrong: ' + ((e && e.message) || 'unknown error'), true);
+  } finally {
+    setModalBusy(false, 'special');
+  }
+}
+
+/* ===================== CONFIRM DIALOG ===================== */
+function askConfirm(message, onYes) {
+  confirmCallback = onYes;
+  document.getElementById('confirm-message').textContent = message;
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+function closeConfirm() {
+  document.getElementById('confirm-overlay').classList.remove('show');
+  confirmCallback = null;
+}
+function confirmYes() {
+  const cb = confirmCallback;
+  closeConfirm();
+  if (cb) cb();
+}
+
+/* ===================== CELEBRATIONS ===================== */
+function celebrationConfettiHtml(count) {
+  const colors = ['#6B1E2C', '#B08D57', '#E8C4C9', '#D9BD8C'];
+  let html = '';
+  for (let i = 0; i < count; i++) {
+    const left = Math.random() * 100;
+    const delay = (Math.random() * 3).toFixed(2);
+    const duration = (3 + Math.random() * 2.5).toFixed(2);
+    const color = colors[i % colors.length];
+    const size = Math.round(6 + Math.random() * 6);
+    const isHeart = i % 2 === 0;
+    const style = isHeart
+      ? `left:${left}%;animation-delay:${delay}s;animation-duration:${duration}s;color:${color};font-size:${size + 6}px;`
+      : `left:${left}%;animation-delay:${delay}s;animation-duration:${duration}s;background:${color};width:${size}px;height:${size}px;`;
+    html += `<span class="confetti-piece" style="${style}">${isHeart ? '&#9829;' : ''}</span>`;
+  }
+  return html;
+}
+function checkCelebrations() {
+  const annivYears = isAnniversaryToday();
+  if (annivYears) { showCelebration('Our Anniversary', annivYears); return; }
+  const today = new Date();
+  for (const sd of state.specialDates) {
+    const d = parseDateStr(sd.date);
+    if (!d) continue;
+    if (d.getMonth() === today.getMonth() && d.getDate() === today.getDate()) {
+      showCelebration(sd.label, today.getFullYear() - d.getFullYear());
+      return;
+    }
+  }
+}
+function showCelebration(label, years) {
+  const root = document.getElementById('celebration-overlay');
+  if (!root) return;
+  root.innerHTML = `
+    <div class="confetti-field">${celebrationConfettiHtml(18)}</div>
+    <div class="celebration-card">
+      <div class="celebration-icon">${ICONS.heart(34)}</div>
+      <h2 class="celebration-title">${esc(label)}</h2>
+      <p class="celebration-sub">${years > 0 ? `${years} year${years !== 1 ? 's' : ''} \u2014 and still counting` : 'Today\u2019s the day \u2665'}</p>
+      <button class="btn-primary" onclick="closeCelebration()">Continue to our story</button>
+    </div>`;
+  root.classList.add('show');
+}
+function closeCelebration() {
+  const root = document.getElementById('celebration-overlay');
+  root.classList.remove('show');
+  setTimeout(() => { root.innerHTML = ''; }, 400);
+}
+
+/* ===================== INIT ===================== */
+async function init() {
+  if (!FIREBASE_CONFIGURED || !fbAuth) {
+    document.getElementById('main-content').innerHTML = `<div class="empty-state">${ICONS.heart(32)}<p>Firebase isn't connected yet.</p><p class="empty-sub">Open the file's code, find "YOUR_API_KEY" near the top, and paste in your own Firebase project's config \u2014 then redeploy. Nothing will save until that's done.</p></div>`;
+    document.getElementById('fab').style.display = 'none';
+    return;
+  }
+  if (!CLOUDINARY_CONFIGURED) {
+    document.getElementById('main-content').innerHTML = `<div class="empty-state">${ICONS.heart(32)}<p>Cloudinary isn't connected yet.</p><p class="empty-sub">Find "YOUR_CLOUD_NAME" and "YOUR_UPLOAD_PRESET" near the top of the file and paste in your own values \u2014 then redeploy. Photos and videos won't upload until that's done.</p></div>`;
+    document.getElementById('fab').style.display = 'none';
+    return;
+  }
+  document.getElementById('main-content').innerHTML = loadingHtml('Connecting\u2026');
+  try {
+    await fbAuth.signInAnonymously();
+  } catch (e) {
+    document.getElementById('main-content').innerHTML = `<div class="empty-state">${ICONS.heart(32)}<p>Couldn't connect to storage.</p><p class="empty-sub">Double check your Firebase config is correct, Anonymous sign-in is enabled in the Firebase console, and you're online. (${esc((e && e.message) || 'unknown error')})</p></div>`;
+    return;
+  }
+  document.getElementById('main-content').innerHTML = loadingHtml('Loading your memories\u2026');
+  const [groupsRaw, songsRaw, specialRaw] = await Promise.all([
+    storageGet('groups-index'),
+    storageGet('songs-index'),
+    storageGet('special-dates')
+  ]);
+  try { state.groups = groupsRaw ? JSON.parse(groupsRaw) : []; } catch (e) { state.groups = []; }
+  try { state.songs = songsRaw ? JSON.parse(songsRaw) : []; } catch (e) { state.songs = []; }
+  try { state.specialDates = specialRaw ? JSON.parse(specialRaw) : []; } catch (e) { state.specialDates = []; }
+  render();
+  setTimeout(checkCelebrations, 650);
+}
+
+document.getElementById('file-input').addEventListener('change', function (e) {
+  const files = Array.from(e.target.files || []);
+  if (files.length === 0) return;
+  if (state.addStep === 'photo-form' || state.addStep === 'photo-edit') {
+    state.pendingFiles = state.pendingFiles.concat(files);
+    renderPreviewGrid();
+  } else {
+    state.pendingFiles = files;
+    state.addStep = 'photo-form';
+    render();
+  }
+  e.target.value = '';
+});
+
+document.getElementById('modal-root').addEventListener('click', function (e) {
+  if (e.target.id === 'modal-root') closeModal();
+});
+
+document.getElementById('gate-password-input').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') checkPassword();
+});
+document.getElementById('gate-error').textContent = '';
+
+window.addEventListener('error', function (e) {
+  toast('App error: ' + ((e && e.message) || 'something went wrong'), true);
+});
+window.addEventListener('unhandledrejection', function (e) {
+  const msg = e && e.reason ? (e.reason.message || String(e.reason)) : 'something went wrong';
+  toast('App error: ' + msg, true);
+});
+/* init() now runs only after a correct password, from unlockApp() */
+
+/* ===================================================================
+   3D MUSEUM MODE
+   A walkable third-person gallery built from the same memories, songs
+   and special dates — using Three.js r128 (loaded separately above).
+=================================================================== */
+const MUSEUM = {
+  initialized: false,
+  renderer: null, scene: null, camera: null,
+  player: null, playerHeart: null,
+  clock: null, rafId: null,
+  exhibitGroup: null, exhibits: [],
+  sparklePoints: null, sparkleData: [],
+  keys: {}, joy: { x: 0, y: 0 },
+  cameraYaw: 0, cameraPitch: 0.3, cameraDist: 5.6,
+  lookPointerId: null, lookLast: { x: 0, y: 0 },
+  joyPointerId: null,
+  bounds: { minX: -8, maxX: 8, minZ: -8, maxZ: 8 },
+  focused: null,
+  detailOpen: false,
+  hintTimer: null,
+};
+
+function museumSupported() { return typeof THREE !== 'undefined'; }
+
+function mkCanvasTexture(draw, w, h) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const tex = new THREE.CanvasTexture(c);
+  tex.encoding = THREE.sRGBEncoding;
+  tex.needsUpdate = true;
+  return tex;
+}
+function mkFloorTexture() {
+  return mkCanvasTexture((ctx, w, h) => {
+    ctx.fillStyle = '#3c1620'; ctx.fillRect(0, 0, w, h);
+    const plankH = h / 8;
+    for (let i = 0; i < 8; i++) {
+      ctx.fillStyle = i % 2 === 0 ? '#45192a' : '#38131c';
+      ctx.fillRect(0, i * plankH, w, plankH);
+      ctx.strokeStyle = 'rgba(176,141,87,0.16)'; ctx.lineWidth = 1.5;
+      ctx.strokeRect(0, i * plankH, w, plankH);
+    }
+    ctx.strokeStyle = 'rgba(217,189,140,0.45)'; ctx.lineWidth = 7;
+    ctx.strokeRect(7, 7, w - 14, h - 14);
+  }, 512, 512);
+}
+function mkSparkleTexture() {
+  return mkCanvasTexture((ctx, w, h) => {
+    const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    g.addColorStop(0, 'rgba(255,255,255,1)');
+    g.addColorStop(0.35, 'rgba(255,238,205,0.85)');
+    g.addColorStop(1, 'rgba(255,238,205,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+  }, 64, 64);
+}
+function mkVinylTexture() {
+  return mkCanvasTexture((ctx, w, h) => {
+    const cx = w / 2, cy = h / 2, r = w / 2;
+    ctx.fillStyle = '#17090d';
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    for (let i = 0; i < 16; i++) {
+      ctx.strokeStyle = 'rgba(107,30,44,0.5)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, r * (0.32 + i * 0.038), 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.fillStyle = '#B08D57';
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.3, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#17090d';
+    ctx.beginPath(); ctx.arc(cx, cy, r * 0.045, 0, Math.PI * 2); ctx.fill();
+  }, 256, 256);
+}
+function mkIconTexture(kind) {
+  return mkCanvasTexture((ctx, w, h) => {
+    ctx.fillStyle = '#EFD3D6'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#6B1E2C'; ctx.lineWidth = 8; ctx.strokeRect(10, 10, w - 20, h - 20);
+    ctx.fillStyle = '#6B1E2C';
+    ctx.font = '120px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(kind === 'video' ? '\u25B6' : '\u2665', w / 2, h / 2 + 10);
+  }, 320, 400);
+}
+function mkPlaqueTexture(lines, w, h) {
+  w = w || 512; h = h || 220;
+  return mkCanvasTexture((ctx) => {
+    ctx.fillStyle = '#FFFBF3'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#B08D57'; ctx.lineWidth = 6; ctx.strokeRect(6, 6, w - 12, h - 12);
+    ctx.textAlign = 'center';
+    const lh = h / (lines.length + 1);
+    lines.forEach((ln, i) => {
+      ctx.font = ln.font || '600 32px Georgia, serif';
+      ctx.fillStyle = ln.color || '#6B1E2C';
+      ctx.fillText(ln.text, w / 2, lh * (i + 1) + 8);
+    });
+  }, w, h);
+}
+function heartShape(s) {
+  const shape = new THREE.Shape();
+  shape.moveTo(0, 0);
+  shape.bezierCurveTo(0, -0.55 * s, -s, -0.55 * s, -s, 0.02 * s);
+  shape.bezierCurveTo(-s, 0.5 * s, -0.3 * s, 0.85 * s, 0, 1.2 * s);
+  shape.bezierCurveTo(0.3 * s, 0.85 * s, s, 0.5 * s, s, 0.02 * s);
+  shape.bezierCurveTo(s, -0.55 * s, 0, -0.55 * s, 0, 0);
+  return shape;
+}
+function mkHeartMesh(size, color, emissiveColor, emissiveIntensity) {
+  const geo = new THREE.ExtrudeGeometry(heartShape(size), { depth: size * 0.35, bevelEnabled: true, bevelThickness: size * 0.06, bevelSize: size * 0.06, bevelSegments: 2, curveSegments: 10 });
+  geo.center();
+  const mat = new THREE.MeshStandardMaterial({ color: color, emissive: emissiveColor, emissiveIntensity: emissiveIntensity != null ? emissiveIntensity : 0.5, roughness: 0.35, metalness: 0.25 });
+  return new THREE.Mesh(geo, mat);
+}
+
+function initMuseumScene() {
+  if (MUSEUM.initialized) return;
+  const canvas = document.getElementById('museum-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  MUSEUM.renderer = renderer;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x1a0d12);
+  scene.fog = new THREE.FogExp2(0x1a0d12, 0.045);
+  MUSEUM.scene = scene;
+
+  const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
+  MUSEUM.camera = camera;
+
+  const ambient = new THREE.AmbientLight(0xffe9c9, 0.55);
+  scene.add(ambient);
+  const hemi = new THREE.HemisphereLight(0xffe9c7, 0x2a1016, 0.4);
+  scene.add(hemi);
+
+  const chandelier = new THREE.PointLight(0xffd9a0, 1.3, 26, 2);
+  chandelier.position.set(0, 5.2, 0);
+  chandelier.castShadow = true;
+  chandelier.shadow.mapSize.set(1024, 1024);
+  chandelier.shadow.camera.near = 0.5;
+  chandelier.shadow.camera.far = 20;
+  chandelier.shadow.bias = -0.003;
+  scene.add(chandelier);
+
+  MUSEUM.exhibitGroup = new THREE.Group();
+  scene.add(MUSEUM.exhibitGroup);
+
+  MUSEUM.roomGroup = new THREE.Group();
+  scene.add(MUSEUM.roomGroup);
+
+  MUSEUM.fillLights = [];
+  MUSEUM.chandelier = chandelier;
+
+  // player: a small glowing heart that floats and leads the way
+  const player = new THREE.Group();
+  player.position.set(0, 0, 2);
+  const heart = mkHeartMesh(0.26, 0x8B2942, 0xD9BD8C, 0.7);
+  heart.position.y = 1.25;
+  heart.rotation.x = Math.PI;
+  heart.castShadow = true;
+  player.add(heart);
+  MUSEUM.playerHeart = heart;
+  const playerLight = new THREE.PointLight(0xffcf99, 1.1, 7, 2);
+  playerLight.position.y = 1.25;
+  player.add(playerLight);
+  const haloTex = mkSparkleTexture();
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, color: 0xd9bd8c, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.8 }));
+  halo.scale.set(1.1, 1.1, 1);
+  halo.position.y = 1.25;
+  player.add(halo);
+  scene.add(player);
+  MUSEUM.player = player;
+
+  // ambient drifting sparkles
+  const SPARKLE_COUNT = 140;
+  const positions = new Float32Array(SPARKLE_COUNT * 3);
+  MUSEUM.sparkleData = [];
+  for (let i = 0; i < SPARKLE_COUNT; i++) {
+    const x = (Math.random() - 0.5) * 30, y = 0.3 + Math.random() * 4.2, z = (Math.random() - 0.5) * 30;
+    positions[i * 3] = x; positions[i * 3 + 1] = y; positions[i * 3 + 2] = z;
+    MUSEUM.sparkleData.push({ baseY: y, phase: Math.random() * Math.PI * 2, speed: 0.4 + Math.random() * 0.5 });
+  }
+  const sparkleGeo = new THREE.BufferGeometry();
+  sparkleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const sparkleMat = new THREE.PointsMaterial({ map: mkSparkleTexture(), size: 0.14, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xd9bd8c });
+  MUSEUM.sparklePoints = new THREE.Points(sparkleGeo, sparkleMat);
+  scene.add(MUSEUM.sparklePoints);
+
+  MUSEUM.clock = new THREE.Clock();
+  MUSEUM.initialized = true;
+
+  bindMuseumInput();
+  window.addEventListener('resize', resizeMuseumRenderer);
+}
+
+function buildMuseumRoom(roomWidth, roomDepth) {
+  const roomHeight = 6.4;
+  if (MUSEUM.roomGroup) { scene_disposeGroup(MUSEUM.roomGroup); MUSEUM.scene.remove(MUSEUM.roomGroup); }
+  MUSEUM.roomGroup = new THREE.Group();
+  MUSEUM.scene.add(MUSEUM.roomGroup);
+  const halfW = roomWidth / 2, halfD = roomDepth / 2;
+
+  const floorTex = mkFloorTexture();
+  floorTex.wrapS = floorTex.wrapT = THREE.RepeatWrapping;
+  floorTex.repeat.set(roomWidth / 4, roomDepth / 4);
+  const floorMat = new THREE.MeshStandardMaterial({ map: floorTex, roughness: 0.5, metalness: 0.1 });
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomDepth), floorMat);
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  MUSEUM.roomGroup.add(floor);
+
+  const ceilMat = new THREE.MeshStandardMaterial({ color: 0xf2e7d4, roughness: 0.95 });
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(roomWidth, roomDepth), ceilMat);
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.y = roomHeight;
+  ceiling.receiveShadow = true;
+  MUSEUM.roomGroup.add(ceiling);
+
+  const wallMat = new THREE.MeshStandardMaterial({ color: 0x4A1420, roughness: 0.85 });
+  const trimMat = new THREE.MeshStandardMaterial({ color: 0xB08D57, emissive: 0x8a6a3a, emissiveIntensity: 0.35, roughness: 0.3, metalness: 0.6 });
+  function wall(w, h, x, z, rotY) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wallMat);
+    m.position.set(x, h / 2, z);
+    m.rotation.y = rotY;
+    m.receiveShadow = true;
+    MUSEUM.roomGroup.add(m);
+    const trim = new THREE.Mesh(new THREE.BoxGeometry(w, 0.22, 0.12), trimMat);
+    trim.position.set(x, h - 0.15, z);
+    trim.rotation.y = rotY;
+    MUSEUM.roomGroup.add(trim);
+  }
+  wall(roomWidth, roomHeight, 0, -halfD, 0);
+  wall(roomWidth, roomHeight, 0, halfD, Math.PI);
+  wall(roomDepth, roomHeight, -halfW, 0, Math.PI / 2);
+  wall(roomDepth, roomHeight, halfW, 0, -Math.PI / 2);
+
+  // soft ceiling fill lights
+  MUSEUM.fillLights.forEach((l) => MUSEUM.scene.remove(l));
+  MUSEUM.fillLights = [];
+  const fillCount = Math.max(2, Math.round((roomWidth + roomDepth) / 10));
+  for (let i = 0; i < fillCount; i++) {
+    const t = (i + 1) / (fillCount + 1);
+    const fx = (t - 0.5) * roomWidth * 0.7;
+    const l = new THREE.PointLight(0xffcf99, 0.55, roomWidth * 0.6, 2);
+    l.position.set(fx, roomHeight - 0.6, (i % 2 === 0 ? -1 : 1) * halfD * 0.45);
+    MUSEUM.scene.add(l);
+    MUSEUM.fillLights.push(l);
+  }
+  MUSEUM.chandelier.distance = Math.max(roomWidth, roomDepth) * 1.4;
+
+  MUSEUM.bounds = { minX: -halfW + 0.9, maxX: halfW - 0.9, minZ: -halfD + 0.9, maxZ: halfD - 0.9 };
+}
+
+function scene_disposeGroup(group) {
+  group.traverse((obj) => {
+    if (obj.geometry) obj.geometry.dispose();
+    if (obj.material) {
+      const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+      mats.forEach((m) => { if (m.map) m.map.dispose(); m.dispose(); });
+    }
+  });
+}
+
+function loadTextureSafe(url, onDone) {
+  if (!url) { onDone(null); return; }
+  const loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('anonymous');
+  loader.load(url, (tex) => { tex.encoding = THREE.sRGBEncoding; onDone(tex); }, undefined, () => onDone(null));
+}
+
+function addMemoryFrame(group, x, z, facing) {
+  const frame = new THREE.Group();
+  frame.position.set(x, 1.7, z);
+  frame.rotation.y = facing;
+
+  const borderMat = new THREE.MeshStandardMaterial({ color: 0xB08D57, emissive: 0x5c431f, emissiveIntensity: 0.3, roughness: 0.35, metalness: 0.5 });
+  const border = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.9, 0.08), borderMat);
+  frame.add(border);
+
+  const photoMat = new THREE.MeshStandardMaterial({ color: 0xEFD3D6, roughness: 0.7 });
+  const photo = new THREE.Mesh(new THREE.PlaneGeometry(1.28, 1.62), photoMat);
+  photo.position.z = 0.055;
+  frame.add(photo);
+
+  if (group.thumb) {
+    const img = new Image();
+    img.onload = () => {
+      const tex = new THREE.Texture(img);
+      tex.encoding = THREE.sRGBEncoding;
+      tex.needsUpdate = true;
+      photoMat.map = tex; photoMat.color.set(0xffffff); photoMat.needsUpdate = true;
+    };
+    img.src = group.thumb;
+  } else {
+    photoMat.map = mkIconTexture(group.mediaCount ? 'video' : 'photo');
+    photoMat.color.set(0xffffff); photoMat.needsUpdate = true;
+  }
+
+  const plaqueTex = mkPlaqueTexture([{ text: formatDate(group.date), font: '600 34px Georgia, serif' }], 420, 110);
+  const plaque = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.17), new THREE.MeshStandardMaterial({ map: plaqueTex, roughness: 0.6 }));
+  plaque.position.set(0, -1.08, 0.05);
+  frame.add(plaque);
+
+  border.castShadow = true;
+  MUSEUM.exhibitGroup.add(frame);
+
+  const dir = new THREE.Vector3(Math.sin(facing), 0, Math.cos(facing));
+  const point = new THREE.Vector3(x, 0, z).addScaledVector(dir, 1.1);
+  MUSEUM.exhibits.push({ type: 'memory', id: group.id, label: 'View this memory', point, radius: 2.2, mesh: frame });
+}
+
+function addSongPedestal(song, x, z, facing) {
+  const grp = new THREE.Group();
+  grp.position.set(x, 0, z);
+  grp.rotation.y = facing;
+
+  const pedestalMat = new THREE.MeshStandardMaterial({ color: 0xFFFBF3, roughness: 0.3, metalness: 0.08 });
+  const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.58, 1.1, 24), pedestalMat);
+  pedestal.position.y = 0.55;
+  pedestal.castShadow = true; pedestal.receiveShadow = true;
+  grp.add(pedestal);
+
+  const vinylTex = mkVinylTexture();
+  const vinylSideMat = new THREE.MeshStandardMaterial({ color: 0x17090d, roughness: 0.4 });
+  const vinylTopMat = new THREE.MeshStandardMaterial({ map: vinylTex, roughness: 0.35, metalness: 0.2 });
+  const vinyl = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.055, 32), [vinylSideMat, vinylTopMat, vinylTopMat]);
+  vinyl.position.y = 1.13;
+  vinyl.castShadow = true;
+  grp.add(vinyl);
+
+  if (song.art) {
+    loadTextureSafe(song.art, (tex) => {
+      if (!tex) return;
+      const artMat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.4 });
+      const artDisc = new THREE.Mesh(new THREE.CircleGeometry(0.16, 24), artMat);
+      artDisc.rotation.x = -Math.PI / 2;
+      artDisc.position.y = 1.16;
+      grp.add(artDisc);
+    });
+  }
+
+  const plaqueTex = mkPlaqueTexture([
+    { text: truncate(song.title, 20), font: 'italic 600 30px Georgia, serif' },
+    { text: truncate(song.artist || '', 24), font: '22px Georgia, serif', color: '#8a7480' }
+  ], 460, 160);
+  const plaque = new THREE.Mesh(new THREE.PlaneGeometry(0.72, 0.25), new THREE.MeshStandardMaterial({ map: plaqueTex, roughness: 0.6 }));
+  plaque.position.set(0, 1.42, 0.52);
+  plaque.rotation.x = -0.35;
+  grp.add(plaque);
+
+  MUSEUM.exhibitGroup.add(grp);
+  MUSEUM.exhibits.push({ type: 'song', id: song.id, label: 'Play \u2014 ' + truncate(song.title, 22), point: new THREE.Vector3(x, 0, z), radius: 1.9, mesh: grp, vinyl });
+}
+
+function addDatePedestal(sd, x, z, facing) {
+  const grp = new THREE.Group();
+  grp.position.set(x, 0, z);
+  grp.rotation.y = facing;
+
+  const pedestalMat = new THREE.MeshStandardMaterial({ color: 0xFFFBF3, roughness: 0.3, metalness: 0.08 });
+  const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.42, 0.85, 20), pedestalMat);
+  pedestal.position.y = 0.425;
+  pedestal.castShadow = true; pedestal.receiveShadow = true;
+  grp.add(pedestal);
+
+  const heart = mkHeartMesh(0.2, 0xB08D57, 0xD9BD8C, 0.6);
+  heart.position.y = 1.15;
+  heart.rotation.x = Math.PI;
+  heart.castShadow = true;
+  grp.add(heart);
+
+  const info = daysUntilNext(sd.date);
+  const countLine = info ? (info.days === 0 ? 'Today!' : `${info.days} day${info.days !== 1 ? 's' : ''} to go`) : '';
+  const plaqueTex = mkPlaqueTexture([
+    { text: truncate(sd.label, 20), font: '600 32px Georgia, serif' },
+    { text: formatDate(sd.date) + (countLine ? '  \u00b7  ' + countLine : ''), font: '22px Georgia, serif', color: '#8a7480' }
+  ], 460, 160);
+  const plaque = new THREE.Mesh(new THREE.PlaneGeometry(0.66, 0.23), new THREE.MeshStandardMaterial({ map: plaqueTex, roughness: 0.6 }));
+  plaque.position.set(0, 1.0, 0.44);
+  plaque.rotation.x = -0.3;
+  grp.add(plaque);
+
+  MUSEUM.exhibitGroup.add(grp);
+  MUSEUM.exhibits.push({ type: 'date', id: sd.id, label: 'View \u2014 ' + truncate(sd.label, 22), point: new THREE.Vector3(x, 0, z), radius: 1.9, mesh: grp, heart });
+}
+
+function buildMuseumExhibits() {
+  if (MUSEUM.exhibitGroup) scene_disposeGroup(MUSEUM.exhibitGroup);
+  if (MUSEUM.exhibitGroup) MUSEUM.scene.remove(MUSEUM.exhibitGroup);
+  MUSEUM.exhibitGroup = new THREE.Group();
+  MUSEUM.scene.add(MUSEUM.exhibitGroup);
+  MUSEUM.exhibits = [];
+
+  const memories = state.groups.slice();
+  const songs = state.songs.slice();
+  const dates = state.specialDates.slice();
+
+  const memSpacing = 2.5;
+  const itemsPerWall = Math.max(1, Math.ceil(memories.length / 2)) ;
+  const neededWidth = memories.length ? itemsPerWall * memSpacing + 6 : 0;
+  const roomWidth = Math.max(14, neededWidth);
+
+  const pedSpacing = 2.6;
+  const neededDepthSongs = songs.length ? songs.length * pedSpacing + 6 : 0;
+  const neededDepthDates = dates.length ? dates.length * pedSpacing + 6 : 0;
+  const roomDepth = Math.max(14, neededDepthSongs, neededDepthDates);
+
+  buildMuseumRoom(roomWidth, roomDepth);
+  const halfW = roomWidth / 2, halfD = roomDepth / 2;
+
+  function linspace(count, spacing) {
+    const arr = [];
+    const start = -((count - 1) / 2) * spacing;
+    for (let i = 0; i < count; i++) arr.push(start + i * spacing);
+    return arr;
+  }
+
+  if (memories.length) {
+    const north = memories.slice(0, itemsPerWall);
+    const south = memories.slice(itemsPerWall);
+    const nx = linspace(north.length, memSpacing);
+    north.forEach((g, i) => addMemoryFrame(g, nx[i], -halfD + 0.1, 0));
+    if (south.length) {
+      const sx = linspace(south.length, memSpacing);
+      south.forEach((g, i) => addMemoryFrame(g, sx[i], halfD - 0.1, Math.PI));
+    }
+  }
+  if (songs.length) {
+    const sz = linspace(songs.length, pedSpacing);
+    songs.forEach((s, i) => addSongPedestal(s, -halfW + 1.3, sz[i], Math.PI / 2));
+  }
+  if (dates.length) {
+    const dz = linspace(dates.length, pedSpacing);
+    dates.forEach((sd, i) => addDatePedestal(sd, halfW - 1.3, dz[i], -Math.PI / 2));
+  }
+
+  if (!memories.length && !songs.length && !dates.length) {
+    const plaqueTex = mkPlaqueTexture([
+      { text: 'The gallery is still empty', font: '600 32px Georgia, serif' },
+      { text: 'Add your first memory to begin', font: '22px Georgia, serif', color: '#8a7480' }
+    ], 520, 180);
+    const plaque = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 0.56), new THREE.MeshStandardMaterial({ map: plaqueTex, roughness: 0.6 }));
+    plaque.position.set(0, 1.6, -halfD + 0.3);
+    MUSEUM.exhibitGroup.add(plaque);
+  }
+}
+
+function resizeMuseumRenderer() {
+  if (!MUSEUM.renderer) return;
+  const overlay = document.getElementById('museum-overlay');
+  const w = overlay.clientWidth || window.innerWidth;
+  const h = overlay.clientHeight || window.innerHeight;
+  MUSEUM.camera.aspect = w / h;
+  MUSEUM.camera.updateProjectionMatrix();
+  MUSEUM.renderer.setSize(w, h, true);
+}
+
+/* ---- input ---- */
+function bindMuseumInput() {
+  window.addEventListener('keydown', (e) => {
+    if (!document.getElementById('museum-overlay').classList.contains('show')) return;
+    const k = e.key.toLowerCase();
+    if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(k)) {
+      MUSEUM.keys[k] = true;
+      e.preventDefault();
+    }
+    if (k === 'e' && MUSEUM.focused) viewFocusedExhibit();
+    if (k === 'escape') { if (MUSEUM.detailOpen) closeMuseumDetail(); else exitMuseum(); }
+  });
+  window.addEventListener('keyup', (e) => {
+    const k = e.key.toLowerCase();
+    MUSEUM.keys[k] = false;
+  });
+
+  const joy = document.getElementById('museum-joystick');
+  const knob = document.getElementById('museum-joystick-knob');
+  const JOY_R = 34;
+  function joyMove(clientX, clientY) {
+    const rect = joy.getBoundingClientRect();
+    let dx = clientX - (rect.left + rect.width / 2);
+    let dy = clientY - (rect.top + rect.height / 2);
+    const dist = Math.min(JOY_R, Math.hypot(dx, dy));
+    const ang = Math.atan2(dy, dx);
+    dx = Math.cos(ang) * dist; dy = Math.sin(ang) * dist;
+    knob.style.transform = `translate(${dx}px, ${dy}px)`;
+    MUSEUM.joy.x = dx / JOY_R; MUSEUM.joy.y = dy / JOY_R;
+  }
+  joy.addEventListener('pointerdown', (e) => {
+    MUSEUM.joyPointerId = e.pointerId;
+    joy.setPointerCapture(e.pointerId);
+    joyMove(e.clientX, e.clientY);
+  });
+  joy.addEventListener('pointermove', (e) => {
+    if (MUSEUM.joyPointerId !== e.pointerId) return;
+    joyMove(e.clientX, e.clientY);
+  });
+  function joyEnd(e) {
+    if (MUSEUM.joyPointerId !== e.pointerId) return;
+    MUSEUM.joyPointerId = null;
+    MUSEUM.joy.x = 0; MUSEUM.joy.y = 0;
+    knob.style.transform = 'translate(0px, 0px)';
+  }
+  joy.addEventListener('pointerup', joyEnd);
+  joy.addEventListener('pointercancel', joyEnd);
+
+  const lookZone = document.getElementById('museum-look-zone');
+  lookZone.addEventListener('pointerdown', (e) => {
+    MUSEUM.lookPointerId = e.pointerId;
+    lookZone.setPointerCapture(e.pointerId);
+    MUSEUM.lookLast.x = e.clientX; MUSEUM.lookLast.y = e.clientY;
+  });
+  lookZone.addEventListener('pointermove', (e) => {
+    if (MUSEUM.lookPointerId !== e.pointerId) return;
+    const dx = e.clientX - MUSEUM.lookLast.x, dy = e.clientY - MUSEUM.lookLast.y;
+    MUSEUM.lookLast.x = e.clientX; MUSEUM.lookLast.y = e.clientY;
+    MUSEUM.cameraYaw -= dx * 0.006;
+    MUSEUM.cameraPitch = Math.max(-0.15, Math.min(0.95, MUSEUM.cameraPitch - dy * 0.006));
+  });
+  function lookEnd(e) {
+    if (MUSEUM.lookPointerId !== e.pointerId) return;
+    MUSEUM.lookPointerId = null;
+  }
+  lookZone.addEventListener('pointerup', lookEnd);
+  lookZone.addEventListener('pointercancel', lookEnd);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && MUSEUM.rafId) { cancelAnimationFrame(MUSEUM.rafId); MUSEUM.rafId = null; }
+    else if (!document.hidden && document.getElementById('museum-overlay').classList.contains('show') && !MUSEUM.rafId) {
+      MUSEUM.clock.getDelta();
+      museumLoop();
+    }
+  });
+}
+
+/* ---- movement / camera / focus ---- */
+function updateMuseumMovement(delta) {
+  if (MUSEUM.detailOpen) return;
+  const k = MUSEUM.keys;
+  let fwd = (k['w'] || k['arrowup'] ? 1 : 0) - (k['s'] || k['arrowdown'] ? 1 : 0);
+  let strafe = (k['d'] || k['arrowright'] ? 1 : 0) - (k['a'] || k['arrowleft'] ? 1 : 0);
+  fwd += -MUSEUM.joy.y;
+  strafe += MUSEUM.joy.x;
+  const len = Math.hypot(fwd, strafe);
+  if (len > 1) { fwd /= len; strafe /= len; }
+  if (len < 0.001) return;
+
+  const yaw = MUSEUM.cameraYaw;
+  const forwardVec = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+  const rightVec = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+  const moveSpeed = 4.4;
+  const delta3 = new THREE.Vector3()
+    .addScaledVector(forwardVec, fwd)
+    .addScaledVector(rightVec, strafe)
+    .multiplyScalar(moveSpeed * delta);
+
+  const p = MUSEUM.player.position;
+  let nx = p.x + delta3.x, nz = p.z + delta3.z;
+  nx = Math.max(MUSEUM.bounds.minX, Math.min(MUSEUM.bounds.maxX, nx));
+  nz = Math.max(MUSEUM.bounds.minZ, Math.min(MUSEUM.bounds.maxZ, nz));
+
+  let blocked = false;
+  for (const ex of MUSEUM.exhibits) {
+    if (ex.type === 'memory') continue;
+    const dx = nx - ex.point.x, dz = nz - ex.point.z;
+    if (Math.hypot(dx, dz) < 0.75) { blocked = true; break; }
+  }
+  if (!blocked) { p.x = nx; p.z = nz; }
+
+  if (delta3.lengthSq() > 0.00001) {
+    const targetYaw = Math.atan2(delta3.x, delta3.z);
+    let diff = targetYaw - MUSEUM.player.rotation.y;
+    while (diff > Math.PI) diff -= Math.PI * 2;
+    while (diff < -Math.PI) diff += Math.PI * 2;
+    MUSEUM.player.rotation.y += diff * Math.min(1, delta * 10);
+  }
+}
+function updateMuseumCamera(delta) {
+  const p = MUSEUM.player.position;
+  const yaw = MUSEUM.cameraYaw, pitch = MUSEUM.cameraPitch, dist = MUSEUM.cameraDist;
+  const offsetX = Math.sin(yaw) * Math.cos(pitch) * dist;
+  const offsetZ = Math.cos(yaw) * Math.cos(pitch) * dist;
+  const offsetY = 1.5 + Math.sin(pitch) * dist;
+  const desired = new THREE.Vector3(p.x + offsetX, offsetY, p.z + offsetZ);
+  const lerpF = 1 - Math.pow(0.0008, delta);
+  MUSEUM.camera.position.lerp(desired, lerpF);
+  const lookAt = new THREE.Vector3(p.x, 1.3, p.z);
+  if (!MUSEUM._lookTarget) MUSEUM._lookTarget = lookAt.clone();
+  MUSEUM._lookTarget.lerp(lookAt, lerpF);
+  MUSEUM.camera.lookAt(MUSEUM._lookTarget);
+}
+function updateMuseumFocus() {
+  const p = MUSEUM.player.position;
+  let nearest = null, nearestDist = Infinity;
+  for (const ex of MUSEUM.exhibits) {
+    const d = Math.hypot(p.x - ex.point.x, p.z - ex.point.z);
+    if (d <= ex.radius && d < nearestDist) { nearest = ex; nearestDist = d; }
+  }
+  MUSEUM.focused = nearest;
+  const promptEl = document.getElementById('museum-prompt');
+  const btn = document.getElementById('museum-prompt-btn');
+  if (nearest && !MUSEUM.detailOpen) {
+    btn.textContent = nearest.label;
+    promptEl.classList.add('show');
+  } else {
+    promptEl.classList.remove('show');
+  }
+}
+
+/* ---- main loop ---- */
+function museumLoop() {
+  MUSEUM.rafId = requestAnimationFrame(museumLoop);
+  const delta = Math.min(0.05, MUSEUM.clock.getDelta());
+  updateMuseumMovement(delta);
+  updateMuseumCamera(delta);
+  updateMuseumFocus();
+
+  const t = performance.now() / 1000;
+  if (MUSEUM.playerHeart) {
+    MUSEUM.playerHeart.position.y = 1.25 + Math.sin(t * 2.4) * 0.05;
+    MUSEUM.playerHeart.rotation.y += delta * 0.8;
+  }
+  for (const ex of MUSEUM.exhibits) {
+    if (ex.vinyl) ex.vinyl.rotation.y += delta * 0.9;
+    if (ex.heart) { ex.heart.position.y = 1.15 + Math.sin(t * 2 + ex.point.x) * 0.04; ex.heart.rotation.y += delta * 0.6; }
+  }
+  const sp = MUSEUM.sparklePoints;
+  if (sp) {
+    const posAttr = sp.geometry.attributes.position;
+    for (let i = 0; i < MUSEUM.sparkleData.length; i++) {
+      const d = MUSEUM.sparkleData[i];
+      posAttr.array[i * 3 + 1] = d.baseY + Math.sin(t * d.speed + d.phase) * 0.3;
+    }
+    posAttr.needsUpdate = true;
+    sp.rotation.y += delta * 0.02;
+  }
+
+  MUSEUM.renderer.render(MUSEUM.scene, MUSEUM.camera);
+}
+
+/* ---- enter / exit ---- */
+function enterMuseum() {
+  if (!museumSupported()) { toast('3D museum could not load \u2014 check your connection and try again', true); return; }
+  const overlay = document.getElementById('museum-overlay');
+  const loading = document.getElementById('museum-loading');
+  overlay.classList.add('show');
+  loading.style.display = 'flex';
+  closeMuseumDetail(true);
+
+  if (!MUSEUM.initialized) initMuseumScene();
+  resizeMuseumRenderer();
+  buildMuseumExhibits();
+
+  MUSEUM.player.position.set(0, 0, Math.min(MUSEUM.bounds.maxZ - 1, 2.5));
+  MUSEUM.player.rotation.y = 0;
+  MUSEUM.cameraYaw = 0;
+  MUSEUM.cameraPitch = 0.3;
+  MUSEUM._lookTarget = null;
+  MUSEUM.keys = {};
+  MUSEUM.joy = { x: 0, y: 0 };
+
+  requestAnimationFrame(() => requestAnimationFrame(() => { loading.style.display = 'none'; }));
+
+  if (MUSEUM.rafId) cancelAnimationFrame(MUSEUM.rafId);
+  MUSEUM.clock.getDelta();
+  museumLoop();
+
+  const hint = document.getElementById('museum-hint');
+  hint.style.opacity = '1';
+  clearTimeout(MUSEUM.hintTimer);
+  MUSEUM.hintTimer = setTimeout(() => { hint.style.opacity = '0'; }, 6000);
+}
+function exitMuseum() {
+  const overlay = document.getElementById('museum-overlay');
+  overlay.classList.remove('show');
+  closeMuseumDetail(true);
+  if (MUSEUM.rafId) { cancelAnimationFrame(MUSEUM.rafId); MUSEUM.rafId = null; }
+}
+
+/* ---- exhibit detail viewing ---- */
+function viewFocusedExhibit() {
+  if (!MUSEUM.focused) return;
+  showMuseumDetail(MUSEUM.focused);
+}
+async function showMuseumDetail(exhibit) {
+  MUSEUM.detailOpen = true;
+  document.getElementById('museum-prompt').classList.remove('show');
+  const panel = document.getElementById('museum-detail-panel');
+  panel.classList.add('show');
+
+  if (exhibit.type === 'memory') {
+    const g = state.groups.find((x) => x.id === exhibit.id);
+    if (!g) { closeMuseumDetail(); return; }
+    panel.innerHTML = `<div class="md-date">${esc(formatDate(g.date))}</div>${g.memory ? `<div class="md-text">${esc(g.memory)}</div>` : ''}<div id="md-media-slot" style="margin-top:14px;text-align:center;color:var(--gold);">Loading photos\u2026</div><button class="md-close" onclick="closeMuseumDetail()">Back to the gallery</button>`;
+    const raw = await storageGet(`group-media-${g.id}`);
+    let items = [];
+    try { items = raw ? JSON.parse(raw) : []; } catch (e) { items = []; }
+    const slot = document.getElementById('md-media-slot');
+    if (slot) slot.outerHTML = items.map((it) => `<div class="md-media">${mediaItemHtml(it)}</div>`).join('') || '';
+  } else if (exhibit.type === 'song') {
+    const s = state.songs.find((x) => x.id === exhibit.id);
+    if (!s) { closeMuseumDetail(); return; }
+    const platformLabel = s.platform === 'anghami' ? 'Anghami' : (s.platform === 'spotify' ? 'Spotify' : 'link');
+    panel.innerHTML = `
+      <div class="md-date">${esc(s.title)}</div>
+      ${s.artist ? `<div class="md-text" style="font-style:normal;color:var(--ink-soft);margin-top:-8px;">${esc(s.artist)}</div>` : ''}
+      ${s.embedUrl ? `<iframe src="${esc(s.embedUrl)}" width="100%" height="80" frameborder="0" allow="encrypted-media; clipboard-write; fullscreen; picture-in-picture" loading="lazy"></iframe>` : `<a class="open-link-btn" style="margin-top:14px;" href="${esc(s.url)}" target="_blank" rel="noopener">Open in ${platformLabel}</a>`}
+      ${s.date ? `<div class="md-date" style="font-size:15px;margin-top:14px;">${esc(formatDate(s.date))}</div>` : ''}
+      ${s.memory ? `<div class="md-text">${esc(s.memory)}</div>` : ''}
+      <button class="md-close" onclick="closeMuseumDetail()">Back to the gallery</button>`;
+  } else if (exhibit.type === 'date') {
+    const sd = state.specialDates.find((x) => x.id === exhibit.id);
+    if (!sd) { closeMuseumDetail(); return; }
+    const info = daysUntilNext(sd.date);
+    const countLine = info ? (info.days === 0 ? 'Today! \u2665' : `${info.days} day${info.days !== 1 ? 's' : ''} to go`) : '';
+    panel.innerHTML = `<div class="md-date">${esc(sd.label)}</div><div class="md-text" style="font-size:16px;">${esc(formatDate(sd.date))}${info && info.iteration > 0 ? ` \u00b7 ${ordinalSuffix(info.iteration)} year` : ''}</div><div class="md-text" style="margin-top:6px;color:var(--garnet);font-style:normal;font-weight:700;">${esc(countLine)}</div><button class="md-close" onclick="closeMuseumDetail()">Back to the gallery</button>`;
+  }
+}
+function closeMuseumDetail(silent) {
+  MUSEUM.detailOpen = false;
+  const panel = document.getElementById('museum-detail-panel');
+  if (panel) { panel.classList.remove('show'); if (!silent) setTimeout(() => { if (!MUSEUM.detailOpen) panel.innerHTML = ''; }, 350); else panel.innerHTML = ''; }
+}
+</script>
+</body>
+</html>
