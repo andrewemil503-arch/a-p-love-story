@@ -454,6 +454,13 @@ nav.tabs{left:12px;right:12px;width:auto;max-width:452px;margin:0 auto;transform
 #museum-detail-panel .md-text{font-size:16.5px;line-height:1.8;color:#2B1620;}
 #museum-detail-panel .md-media{border:1px solid rgba(176,141,87,.5);border-radius:16px;box-shadow:0 14px 28px -14px rgba(74,20,32,.5);}
 #museum-detail-panel .md-close{margin:14px auto 0;width:auto;padding:11px 28px;border:1px solid rgba(176,141,87,.6);border-radius:999px;color:#6B1E2C;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;}
+
+/* ===== museum: no text selection, no ghost taps ===== */
+#museum-overlay{visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s;}
+#museum-overlay.show{visibility:visible;transition:opacity .45s ease,visibility 0s;}
+#museum-overlay:not(.show),#museum-overlay:not(.show) *{pointer-events:none !important;}
+#museum-overlay,#museum-overlay *,html.museum-open,html.museum-open body,html.museum-open body *{-webkit-user-select:none !important;user-select:none !important;-webkit-touch-callout:none !important;-webkit-tap-highlight-color:transparent;}
+#museum-overlay ::selection,html.museum-open ::selection{background:transparent;color:inherit;}
 </style>
 </head>
 <body>
@@ -2834,6 +2841,7 @@ function enterMuseum() {
 function exitMuseum() {
   const overlay = document.getElementById('museum-overlay');
   overlay.classList.remove('show');
+  document.documentElement.classList.remove('museum-open');
   closeMuseumDetail(true);
   if (MUSEUM.rafId) { cancelAnimationFrame(MUSEUM.rafId); MUSEUM.rafId = null; }
 }
@@ -3291,7 +3299,9 @@ function updateMuseumCamera(delta) {
 function enterMuseum() {
   if (!museumSupported()) { toast('3D museum could not load \u2014 check your connection and try again', true); return; }
   const overlay = document.getElementById('museum-overlay'), loading = document.getElementById('museum-loading');
-  overlay.classList.add('show'); loading.style.display = 'flex'; closeMuseumDetail(true);
+  overlay.classList.add('show'); document.documentElement.classList.add('museum-open');
+  try { window.getSelection().removeAllRanges(); } catch (e) {}
+  loading.style.display = 'flex'; closeMuseumDetail(true);
   if (!MUSEUM.initialized) initMuseumScene();
   resizeMuseumRenderer();
   const loads = document.fonts && document.fonts.load ? Promise.all([
@@ -3332,6 +3342,17 @@ function museumLoop() {
   MUSEUM.renderer.render(MUSEUM.scene, MUSEUM.camera);
 }
 
+</script>
+<script>
+(function () {
+  const o = document.getElementById('museum-overlay');
+  ['selectstart', 'contextmenu', 'dragstart'].forEach((ev) => o.addEventListener(ev, (e) => e.preventDefault()));
+  ['museum-look-zone', 'museum-joystick'].forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+    el.addEventListener('pointerdown', () => { try { window.getSelection().removeAllRanges(); } catch (e) {} });
+  });
+})();
 </script>
 </body>
 </html>
