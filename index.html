@@ -634,6 +634,7 @@ let state = {
   sdFavOnly: false,
   editingId: null,
   editingMedia: null,
+  editingOrigCoverUrl: null,
 };
 let confirmCallback = null;
 
@@ -859,6 +860,24 @@ async function compressImage(file, maxDim, quality) {
   canvas.width = width; canvas.height = height;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0, width, height);
+  return canvas.toDataURL('image/jpeg', quality);
+}
+async function thumbFromUrl(url, maxDim, quality) {
+  const img = await new Promise((resolve, reject) => {
+    const im = new Image();
+    im.crossOrigin = 'anonymous';
+    im.onload = () => resolve(im);
+    im.onerror = reject;
+    im.src = url;
+  });
+  let width = img.width, height = img.height;
+  if (width > maxDim || height > maxDim) {
+    if (width >= height) { height = Math.round(height * maxDim / width); width = maxDim; }
+    else { width = Math.round(width * maxDim / height); height = maxDim; }
+  }
+  const canvas = document.createElement('canvas');
+  canvas.width = width; canvas.height = height;
+  canvas.getContext('2d').drawImage(img, 0, 0, width, height);
   return canvas.toDataURL('image/jpeg', quality);
 }
 async function compressImageToBlob(file, maxDim, quality) {
@@ -1094,6 +1113,8 @@ async function openEditGroup(id) {
   try { items = raw ? JSON.parse(raw) : []; } catch (e) { items = []; }
   if (state.addStep === 'photo-edit' && state.editingId === id) {
     state.editingMedia = items;
+    const firstImg = items.find((m) => m.type === 'image');
+    state.editingOrigCoverUrl = firstImg ? firstImg.url : null;
     renderPreviewGrid();
   }
 }
@@ -1883,8 +1904,24 @@ async function submitPhotoEditForm(id) {
     if (!mediaOk) { toast('Could not save \u2014 check your connection and try again', true); return; }
 
     const hasImages = mediaRefs.some((m) => m.type === 'image');
-    if (!hasImages) group.thumb = null;
-    else if (!group.thumb && newCoverThumb) group.thumb = newCoverThumb;
+    if (!hasImages) {
+      group.thumb = null;
+    } else {
+      // The cover must always match the FIRST image of the memory as it is now.
+      const firstImg = mediaRefs.find((m) => m.type === 'image');
+      const isExisting = existingMedia.some((m) => m === firstImg);
+      if (!isExisting) {
+        // first image is a newly uploaded one
+        group.thumb = newCoverThumb || null;
+      } else if (firstImg.url === state.editingOrigCoverUrl && group.thumb) {
+        // same cover as before: keep it
+      } else {
+        // an older photo became the cover (previous cover was removed): rebuild its thumb
+        let t = null;
+        try { t = await thumbFromUrl(firstImg.url, THUMB_MAX_DIM, THUMB_QUALITY); } catch (e3) { /* CORS/network */ }
+        group.thumb = t || newCoverThumb || null;
+      }
+    }
     group.date = date;
     group.memory = memory;
     group.mediaCount = mediaRefs.length;
@@ -2446,7 +2483,7 @@ function addMemoryFrame(group, x, z, facing) {
   const border = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.9, 0.08), borderMat);
   frame.add(border);
 
-  const photoMat = new THREE.MeshStandardMaterial({ color: 0xEFD3D6, roughness: 0.7 });
+  const photoMat = new THREE.MeshBasicMaterial({ color: 0xEFD3D6, toneMapped: false });
   const photo = new THREE.Mesh(new THREE.PlaneGeometry(1.28, 1.62), photoMat);
   photo.position.z = 0.055;
   frame.add(photo);
@@ -3165,7 +3202,7 @@ function addMemoryFrame(group, x, z, facing) {
   frame.add(new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.9, .14), deepM));
   const matte = new THREE.Mesh(new THREE.PlaneGeometry(1.36, 1.76), new THREE.MeshStandardMaterial({ color: 0xF5EDDF, roughness: .9 })); matte.position.z = .075; frame.add(matte);
   const lip = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.56, .04), goldM); lip.position.z = .075; frame.add(lip);
-  const photoMat = new THREE.MeshStandardMaterial({ color: 0xEFD3D6, roughness: .6 });
+  const photoMat = new THREE.MeshBasicMaterial({ color: 0xEFD3D6, toneMapped: false });
   const photo = new THREE.Mesh(new THREE.PlaneGeometry(1.14, 1.5), photoMat); photo.position.z = .1; frame.add(photo);
   [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sy]) => { const s = new THREE.Mesh(new THREE.SphereGeometry(.065, 12, 10), goldM); s.position.set(sx * .82, sy * 1.02, .06); frame.add(s); });
 
