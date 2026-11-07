@@ -2276,13 +2276,19 @@ function mkFloorTexture() {
   }, 1024, 1024);
 }
 function mkSparkleTexture() {
-  return mkCanvasTexture((ctx, w, h) => {
-    const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
-    g.addColorStop(0, 'rgba(255,255,255,1)');
-    g.addColorStop(0.35, 'rgba(255,238,205,0.85)');
-    g.addColorStop(1, 'rgba(255,238,205,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-  }, 64, 64);
+  // Built from raw pixels (constant colour, alpha only) so soft edges never pick up dark/grey fringe pixels
+  const N = 64, data = new Uint8Array(N * N * 4);
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const d = Math.hypot(x + .5 - N / 2, y + .5 - N / 2) / (N / 2);
+    let a = d >= 1 ? 0 : d < .35 ? 1 - .15 * (d / .35) : .85 * (1 - (d - .35) / .65);
+    a = Math.max(0, Math.min(1, a)); a = a * a * (3 - 2 * a);
+    const i = (y * N + x) * 4;
+    data[i] = 255; data[i + 1] = 238; data[i + 2] = 205; data[i + 3] = Math.round(a * 255);
+  }
+  const tex = new THREE.DataTexture(data, N, N, THREE.RGBAFormat);
+  tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+  tex.needsUpdate = true;
+  return tex;
 }
 function mkVinylTexture() {
   return mkCanvasTexture((ctx, w, h) => {
@@ -3140,7 +3146,7 @@ function initMuseumScene() {
   chandelier.position.set(0, 5.4, 0);
   chandelier.castShadow = true;
   chandelier.shadow.mapSize.set(1024, 1024);
-  chandelier.shadow.camera.near = 0.5; chandelier.shadow.camera.far = 22; chandelier.shadow.bias = -0.003;
+  chandelier.shadow.camera.near = 0.5; chandelier.shadow.camera.far = 22; chandelier.shadow.bias = -0.0008; chandelier.shadow.normalBias = 0.05;
   scene.add(chandelier);
   const fixture = lxChandelier(); fixture.position.set(0, 5.5, 0); scene.add(fixture);
   MUSEUM.fixture = fixture;
@@ -3164,7 +3170,7 @@ function initMuseumScene() {
     MUSEUM.sparkleData.push({ baseY: y, phase: Math.random() * 6.28, speed: .35 + Math.random() * .45 });
   }
   const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  MUSEUM.sparklePoints = new THREE.Points(geo, new THREE.PointsMaterial({ map: mkSparkleTexture(), size: .1, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xe6c98f }));
+  MUSEUM.sparklePoints = new THREE.Points(geo, new THREE.PointsMaterial({ map: mkSparkleTexture(), size: .1, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xe6c98f, fog: false, alphaTest: .02 }));
   scene.add(MUSEUM.sparklePoints);
   MUSEUM.clock = new THREE.Clock();
   MUSEUM.initialized = true;
@@ -3199,7 +3205,7 @@ function buildMuseumRoom(roomWidth, roomDepth) {
   function wall(w, x, z, rotY) {
     const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; R.add(g);
     const t = wt.clone(); t.needsUpdate = true; t.repeat.set(w / 2.4, H / 2.4);
-    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, H), new THREE.MeshStandardMaterial({ map: t, roughness: .85 })); p.position.y = H / 2; p.receiveShadow = true; g.add(p);
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, H), new THREE.MeshStandardMaterial({ map: t, roughness: .85 })); p.position.y = H / 2; p.receiveShadow = false; g.add(p);
     const n = wn.clone(); n.needsUpdate = true; n.repeat.set(w / 1.7, 1);
     const wain = new THREE.Mesh(new THREE.BoxGeometry(w, 1.15, .08), new THREE.MeshStandardMaterial({ map: n, roughness: .6 })); wain.position.set(0, .575, .04); g.add(wain);
     [[w, .1, .13, 1.2, .06, goldM], [w, .24, .14, .12, .07, goldM], [w, .3, .22, H - .15, .11, creamM], [w, .08, .27, H - .34, .13, goldM]].forEach(([bw, bh, bd, y, z, m]) => {
