@@ -3541,7 +3541,7 @@ function museumLoop() {
 <script id="ritual-script">
 (function(){
   var DAYS=[new Date(2026,10,2),new Date(2026,10,3),new Date(2026,10,4),new Date(2026,10,5),new Date(2026,10,6),new Date(2026,10,10),new Date(2026,10,11)];
-  var ROMAN=['I','II','III','IV','V','VI'];
+  var ROMAN=['I','II','III','IV','V','VI','VII'];
   var CLUES=[
     {t:'Something is taking shape',b:'For a while now, a quiet secret has been coming together. It was built slowly, with patience, and with you in mind from the very first line.'},
     {t:'It was made by hand',b:'No shortcuts. Every detail was chosen on purpose, the way you choose the words you most want to get right.'},
@@ -3613,7 +3613,7 @@ function museumLoop() {
   function note(msg){var n=$('rt-note');n.textContent=msg;n.classList.add('show');clearTimeout(note.t);note.t=setTimeout(function(){n.classList.remove('show');},2800);}
   function render(){
     var t=today(),left=diff(DAYS[6],t),h='',i,cnt=0;
-    for(i=0;i<7;i++){var s=status(i),f=i===6,k=s==='opened'?'opened':s==='locked'?'locked':'wax';if(s==='opened'&&i<6)cnt++;
+    for(i=0;i<7;i++){var s=status(i),f=i===6,k=s==='opened'?'opened':s==='locked'?'locked':'wax';if(s==='opened')cnt++;
       var cap=s==='opened'?'Opened':s==='locked'?'Locked':s==='today'?'Today':'Open me';
       if(f&&(s==='today'||s==='ready'))cap='The day';
       h+='<button class="rt-cell '+s+'" type="button" data-i="'+i+'" aria-label="'+fmt(DAYS[i],{day:'numeric',month:'long'})+', '+cap+'"><span class="sw">'+seal(k,i,f)+'</span><span class="d">'+DAYS[i].getDate()+'<small>Nov</small></span><span class="c">'+cap+'</span></button>';}
@@ -3622,15 +3622,15 @@ function museumLoop() {
     if(left>0){num.style.display='';num.textContent=left;unit.textContent=left===1?'day to go':'days to go';unit.style.fontSize='';unit.style.color='';}
     else{num.style.display='none';unit.textContent='Today is the day';unit.style.fontSize='30px';unit.style.color='#6B1E2C';}
     $('rt-kicker').textContent=left>0?'Opening Wednesday, 11 November':'Your seal awaits';
-    $('rt-line').textContent=left>0?'Break one seal each day. Every clue brings you closer to what is waiting behind this door.':'Six clues led you here. One seal remains.';
-    $('rt-bar').style.width=(cnt/6*100)+'%';
-    $('rt-progtxt').textContent=clockReady?cnt+' of 6 clues collected':'Connecting\u2026';
+    $('rt-line').textContent=left>0?'Break one seal each day. Every clue brings you closer to what is waiting behind this door.':'Six clues led you here. The seventh awaits.';
+    $('rt-bar').style.width=(cnt/7*100)+'%';
+    $('rt-progtxt').textContent=clockReady?cnt+' of 7 clues collected':'Connecting\u2026';
   }
   var cur=null,lastFocus=null,atlasKick=0;
   function kickAtlas(){if(atlasKick||!window.APSOutroAtlas||status(6)==='locked')return;atlasKick=1;setTimeout(function(){if(window.APSOutroPrep)window.APSOutroPrep();else if(window.APSOutroAtlas)window.APSOutroAtlas();},1500);}
   function openSheet(i){
     cur=i;lastFocus=document.activeElement;var st=status(i),final=i===6;if(final)kickAtlas();
-    $('rt-s-kicker').textContent=final?'The final seal':'Clue '+ROMAN[i]+' of VI';
+    $('rt-s-kicker').textContent=final?'Clue VII of VII \u00b7 Final seal':'Clue '+ROMAN[i]+' of VII';
     $('rt-s-title').textContent=fmt(DAYS[i],{weekday:'long',day:'numeric',month:'long'});
     $('rt-hl').innerHTML=seal('wax',i,final);$('rt-hr').innerHTML=seal('wax',i,final);
     var big=$('rt-big');big.classList.remove('broken','holding');
@@ -3659,7 +3659,7 @@ function museumLoop() {
   function showLetter(i,instant){
     if(i===6){playOutro();return;}
     var final=i===6,c=final?FINAL:CLUES[i],L=$('rt-letter');
-    L.innerHTML='<p class="rt-kicker">'+(final?'For you':'Clue '+ROMAN[i]+' of VI')+'</p><div class="rt-rule"></div><h2>'+c.t+'</h2><div class="rt-rule" style="margin:16px auto"></div><p class="body">'+c.b+'</p>'+(final?'<div class="rt-sign">With all my love, Andrew</div>':'')+(final?'<button class="rt-btn primary" type="button" id="rt-enter">Enter our story</button>':'<p class="rt-foot">'+footFor(i)+'</p><button class="rt-btn" type="button" id="rt-keep">Keep it safe</button>');
+    L.innerHTML='<p class="rt-kicker">'+(final?'For you':'Clue '+ROMAN[i]+' of VII')+'</p><div class="rt-rule"></div><h2>'+c.t+'</h2><div class="rt-rule" style="margin:16px auto"></div><p class="body">'+c.b+'</p>'+(final?'<div class="rt-sign">With all my love, Andrew</div>':'')+(final?'<button class="rt-btn primary" type="button" id="rt-enter">Enter our story</button>':'<p class="rt-foot">'+footFor(i)+'</p><button class="rt-btn" type="button" id="rt-keep">Keep it safe</button>');
     $('rt-stage').classList.add('gone');L.classList.add('show');
     setTimeout(function(){L.classList.add('in');},instant?30:60);
     var k=$('rt-keep');if(k)k.onclick=closeSheet;
