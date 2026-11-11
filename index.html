@@ -356,7 +356,7 @@ header.site-header::after{content:'';position:absolute;left:10%;right:10%;bottom
 .wordmark{background-image:linear-gradient(100deg,#6B1E2C 28%,#B08D57 44%,#EBD3A2 50%,#B08D57 56%,#6B1E2C 72%);background-size:320% 100%;filter:drop-shadow(0 3px 10px rgba(176,141,87,.28));}
 header.site-header .wordmark{font-size:50px;}
 .header-divider{width:110px;background:linear-gradient(90deg,transparent,var(--gold) 34%,transparent 34%,transparent 66%,var(--gold) 66%,transparent);}
-.header-divider::before{background:none !important;padding:0 !important;font-size:12px;}
+.header-divider::before{background:none !important;padding:0 !important;font-size:12px;left:0 !important;right:0 !important;width:100%;text-align:center;transform:none;line-height:1;top:-6px !important;transform-origin:50% 50%;}
 .subtitle{letter-spacing:5px;color:#9A7B4B;font-weight:500;}
 .anniversary-pill{background:linear-gradient(180deg,#FFFDF8,#F9EEDD);border:1px solid var(--gold);padding:8px 20px;font-size:14.5px;}
 nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:max(14px,env(safe-area-inset-bottom));width:min(452px,calc(100% - 24px));z-index:45;background:rgba(255,252,246,.86);-webkit-backdrop-filter:blur(20px) saturate(1.2);backdrop-filter:blur(20px) saturate(1.2);border:1px solid var(--hair);border-radius:30px;padding:6px;justify-content:space-between;gap:2px;overflow:visible;box-shadow:0 18px 36px -12px rgba(74,20,32,.42),inset 0 1px 0 rgba(255,255,255,.8);}
@@ -400,7 +400,7 @@ nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:max(14px,env(
 .detail-date{font-size:28px;}
 .empty-state svg,.loading-state svg{filter:drop-shadow(0 0 10px rgba(217,189,140,.55));}
 #gate-overlay{background-color:#F8F1E6;background-image:radial-gradient(ellipse 90% 55% at 50% 10%,rgba(232,196,201,.85),transparent 68%),radial-gradient(ellipse 60% 40% at 90% 90%,rgba(217,189,140,.3),transparent 70%);}
-#gate-card{background:rgba(255,252,246,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--hair);border-radius:32px;padding:40px 28px 30px;box-shadow:var(--lift);}
+#gate-card{background:rgba(255,252,246,.96);border:1px solid var(--hair);border-radius:32px;padding:40px 28px 30px;box-shadow:var(--lift);}
 #gate-card .wordmark{font-size:44px;}
 .gate-input{border-radius:14px;background:#fff;border-color:rgba(176,141,87,.4);}
 /* ---- Sites ---- */
@@ -597,7 +597,7 @@ const FIREBASE_CONFIGURED = !!(
   firebaseConfig.projectId && firebaseConfig.projectId !== 'YOUR_PROJECT_ID'
 );
 let fbAuth = null, db = null;
-if (FIREBASE_CONFIGURED) {
+if (FIREBASE_CONFIGURED && typeof firebase !== 'undefined') {
   try {
     firebase.initializeApp(firebaseConfig);
     fbAuth = firebase.auth();
@@ -651,10 +651,10 @@ let state = {
 };
 let confirmCallback = null;
 
-const FULL_IMG_MAX_DIM = 1600;
-const FULL_IMG_QUALITY = 0.78;
-const THUMB_MAX_DIM = 140;
-const THUMB_QUALITY = 0.5;
+const FULL_IMG_MAX_DIM = 4096;
+const FULL_IMG_QUALITY = 0.98;
+const THUMB_MAX_DIM = 320;
+const THUMB_QUALITY = 0.85;
 const VIDEO_MAX_BYTES = 100 * 1024 * 1024;
 const VIDEO_MAX_MB = Math.round(VIDEO_MAX_BYTES / (1024 * 1024));
 const VALID_PASSWORDS = ['Love Anniversary 24/10/2025'];
@@ -2238,13 +2238,19 @@ function mkFloorTexture() {
   }, 1024, 1024);
 }
 function mkSparkleTexture() {
-  return mkCanvasTexture((ctx, w, h) => {
-    const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
-    g.addColorStop(0, 'rgba(255,255,255,1)');
-    g.addColorStop(0.35, 'rgba(255,238,205,0.85)');
-    g.addColorStop(1, 'rgba(255,238,205,0)');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-  }, 64, 64);
+  // Built from raw pixels (constant colour, alpha only) so soft edges never pick up dark/grey fringe pixels
+  const N = 64, data = new Uint8Array(N * N * 4);
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const d = Math.hypot(x + .5 - N / 2, y + .5 - N / 2) / (N / 2);
+    let a = d >= 1 ? 0 : d < .35 ? 1 - .15 * (d / .35) : .85 * (1 - (d - .35) / .65);
+    a = Math.max(0, Math.min(1, a)); a = a * a * (3 - 2 * a);
+    const i = (y * N + x) * 4;
+    data[i] = 255; data[i + 1] = 238; data[i + 2] = 205; data[i + 3] = Math.round(a * 255);
+  }
+  const tex = new THREE.DataTexture(data, N, N, THREE.RGBAFormat);
+  tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+  tex.needsUpdate = true;
+  return tex;
 }
 function mkVinylTexture() {
   return mkCanvasTexture((ctx, w, h) => {
@@ -2313,7 +2319,7 @@ function initMuseumScene() {
   if (MUSEUM.initialized) return;
   const canvas = document.getElementById('museum-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -2337,7 +2343,7 @@ function initMuseumScene() {
   const chandelier = new THREE.PointLight(0xffd9a0, 1.3, 26, 2);
   chandelier.position.set(0, 5.2, 0);
   chandelier.castShadow = true;
-  chandelier.shadow.mapSize.set(1024, 1024);
+  chandelier.shadow.mapSize.set(2048, 2048);
   chandelier.shadow.camera.near = 0.5;
   chandelier.shadow.camera.far = 20;
   chandelier.shadow.bias = -0.003;
@@ -2946,7 +2952,7 @@ function closeMuseumDetail(silent) {
 const LX_SERIF = '"Cormorant Garamond","Playfair Display",Georgia,serif';
 const LX_H = 7;
 function lxRnd(a, b) { return a + Math.random() * (b - a); }
-function lxAniso(t) { try { t.anisotropy = Math.min(8, MUSEUM.renderer.capabilities.getMaxAnisotropy()); } catch (e) {} return t; }
+function lxAniso(t) { try { t.anisotropy = MUSEUM.renderer.capabilities.getMaxAnisotropy(); } catch (e) {} return t; }
 
 function mkFloorTexture() {
   return lxAniso(mkCanvasTexture((ctx, w, h) => {
@@ -3083,7 +3089,7 @@ function initMuseumScene() {
   if (MUSEUM.initialized) return;
   const canvas = document.getElementById('museum-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 3));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
@@ -3101,8 +3107,8 @@ function initMuseumScene() {
   const chandelier = new THREE.PointLight(0xffd9a0, 1.5, 26, 2);
   chandelier.position.set(0, 5.4, 0);
   chandelier.castShadow = true;
-  chandelier.shadow.mapSize.set(1024, 1024);
-  chandelier.shadow.camera.near = 0.5; chandelier.shadow.camera.far = 22; chandelier.shadow.bias = -0.003;
+  chandelier.shadow.mapSize.set(2048, 2048);
+  chandelier.shadow.camera.near = 0.5; chandelier.shadow.camera.far = 22; chandelier.shadow.bias = -0.0008; chandelier.shadow.normalBias = 0.05;
   scene.add(chandelier);
   const fixture = lxChandelier(); fixture.position.set(0, 5.5, 0); scene.add(fixture);
   MUSEUM.fixture = fixture;
@@ -3126,7 +3132,7 @@ function initMuseumScene() {
     MUSEUM.sparkleData.push({ baseY: y, phase: Math.random() * 6.28, speed: .35 + Math.random() * .45 });
   }
   const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  MUSEUM.sparklePoints = new THREE.Points(geo, new THREE.PointsMaterial({ map: mkSparkleTexture(), size: .1, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xe6c98f }));
+  MUSEUM.sparklePoints = new THREE.Points(geo, new THREE.PointsMaterial({ map: mkSparkleTexture(), size: .1, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, color: 0xe6c98f, fog: false, alphaTest: .02 }));
   scene.add(MUSEUM.sparklePoints);
   MUSEUM.clock = new THREE.Clock();
   MUSEUM.initialized = true;
@@ -3161,7 +3167,7 @@ function buildMuseumRoom(roomWidth, roomDepth) {
   function wall(w, x, z, rotY) {
     const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; R.add(g);
     const t = wt.clone(); t.needsUpdate = true; t.repeat.set(w / 2.4, H / 2.4);
-    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, H), new THREE.MeshStandardMaterial({ map: t, roughness: .85 })); p.position.y = H / 2; p.receiveShadow = true; g.add(p);
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, H), new THREE.MeshStandardMaterial({ map: t, roughness: .85 })); p.position.y = H / 2; p.receiveShadow = false; g.add(p);
     const n = wn.clone(); n.needsUpdate = true; n.repeat.set(w / 1.7, 1);
     const wain = new THREE.Mesh(new THREE.BoxGeometry(w, 1.15, .08), new THREE.MeshStandardMaterial({ map: n, roughness: .6 })); wain.position.set(0, .575, .04); g.add(wain);
     [[w, .1, .13, 1.2, .06, goldM], [w, .24, .14, .12, .07, goldM], [w, .3, .22, H - .15, .11, creamM], [w, .08, .27, H - .34, .13, goldM]].forEach(([bw, bh, bd, y, z, m]) => {
